@@ -9,5 +9,4 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-console.log(1);
 export default store;

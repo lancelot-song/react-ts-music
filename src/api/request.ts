@@ -1,6 +1,8 @@
-export function requestBannerlist(){
-    return true;
+import { axiosIntance } from './config';
+
+export const getBannerList = () =>{
+    return axiosIntance.get('/banner');
 }
-export function requestRecommendlist(){
-    return true;
+export const getRecommendList = () =>{
+    return axiosIntance.get('/personalized');
 }

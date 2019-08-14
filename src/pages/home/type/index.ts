@@ -36,3 +36,11 @@ export type TRecommendResult = {
     hasTaste:boolean;
     result : TRecommendList
 }
+
+
+export interface IHomeProps{
+    status : boolean;
+    bannerList : TBannerList;
+    commonStatusChange:(status:boolean)=>void;
+    requestBannerList:()=>void;
+}

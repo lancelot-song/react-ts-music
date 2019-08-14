@@ -1,46 +1,53 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { IHomeProps } from './type'
 import * as commonAction from '../../store/actionCreators';
-import logo from '../../logo.svg';
+import * as homeAction from './store/actionCreators';
 
-interface IProps{
-    status : boolean;
-    commonStatusChange:(status:boolean)=>void;
-}
 
-// Regular props
-class Home extends PureComponent<IProps>{
-    commonStatusChange = () =>{
-        this.props.commonStatusChange(!this.props.status);
+function Home(props:IHomeProps){
+    const { bannerList } = props;
+
+    const commonStatusChange = () =>{
+        props.commonStatusChange(!props.status);
     }
-    render(){
-        return (
-            <div className="App">
+
+    useEffect(()=>{
+        if( !bannerList.length ){
+            props.requestBannerList();
+        }
+    },[]);
+
+    return (
+        <div className='App'>
+                <ul>
+                    {
+                        bannerList.map(item=>{
+                            return (
+                                <li key={item.targetId}>{item.targetId}</li>
+                            )
+                        })
+                    }
+                </ul>
                 <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p onClick={this.commonStatusChange}>
+                    <p onClick={commonStatusChange}>
                         Edit <code>src/App.tsx</code> and save to reload.
                     </p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
                 </header>
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 const mapState = (state:any) => ({
-    status : state.getIn(['common','status'])
+    status : state.getIn(['common','status']),
+    bannerList : state.getIn(['home','bannerList']).toJS()
 });
 const mapProps = (dispatch:any) => ({
     commonStatusChange : (status:boolean) =>{
         dispatch( commonAction.commonStatusChange(status) );
+    },
+    requestBannerList : () =>{
+        dispatch( homeAction.requestBannerList() );
     }
 });
 

@@ -15,14 +15,11 @@ type TAction = {
 export default (state = defaultState, action:TAction) => {
     switch(action.type){
         case constants.CHANGE_BANNER_LIST:
-            state.setIn(['bannerList'], action.data);
-            break;
+            return state.set("bannerList", action.data);
         case constants.CHANGE_RECOMMEND_LIST:
-            state.setIn(['recommendList'], action.data);
-            break;
+            return state.set('recommendList', action.data);
         case constants.CHANGE_ENTER_LOADING:
-            state.setIn(['enterLoading'], action.data);
-            break;
+            return state.set('enterLoading', action.data);
         default:;
     }
     return state;
