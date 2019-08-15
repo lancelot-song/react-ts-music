@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import * as constants from './constants';
-import { reducer as homeReducer } from '../pages/home/store';
+import { reducer as recommendReducer } from '../pages/recommend/store';
 
 const commonState = fromJS({
     status : false
@@ -24,7 +24,7 @@ const commonReducer = (state = commonState, action:commonAction) => {
 
 const rootReducer = combineReducers({
     common : commonReducer,
-    home : homeReducer
+    recommend : recommendReducer
 });
 
 export default rootReducer;
