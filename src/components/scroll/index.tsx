@@ -1,5 +1,4 @@
 import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from 'react';
-import PropTypes  from 'prop-types';
 import BScroll from 'better-scroll';
 import { IScrollProps } from './type';
 import { Loading } from '../loading';
@@ -76,7 +75,7 @@ const ScrollRef = (props:IScrollProps, ref:any) => {
         }
     }));
     const showPullUpLoading = pullUpLoading ? { display : 'block' } : { display : 'none' };
-    const showPullDownLoading = pullUpLoading ? { display : 'block' } : { display : 'none' };
+    const showPullDownLoading = pullDownLoading ? { display : 'block' } : { display : 'none' };
     return (
         <div className='ui-scroll-content' ref={scrollContentRef}>
             { props.children }

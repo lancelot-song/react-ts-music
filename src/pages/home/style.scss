@@ -1,0 +1,42 @@
+.ui-app{
+    position:relative;
+    padding:0px 4.375%;
+    overflow: hidden;
+    .ui-hd{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .ui-nav{
+            text-align: center;
+            height:1.9rem;
+            line-height: 1.8rem;
+            .link{
+                min-width:2.5rem;
+                display: inline-block;
+                color:#828282;
+                font-size:.7rem;
+                text-decoration: none;
+                text-align: center;
+                transition:font-size .3s ease;
+                &.actived{
+                    color:#343434;
+                    font-size:.8rem;
+                    font-weight: 700;
+                }
+            }
+        }
+        .btn-menu-switch,.btn-search{
+            width:.75rem;
+            height:.75rem;
+        }
+        .btn-menu-switch{
+            left:0px;
+            background: url(../../assets/images/icon-menu.svg);
+        }
+        .btn-search{
+            right:0px;
+            background: url(../../assets/images/icon-search.svg);
+        }
+    }
+}
