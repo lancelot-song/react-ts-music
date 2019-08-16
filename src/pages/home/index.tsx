@@ -5,7 +5,7 @@ import { IHomeProps } from './type'
 import * as commonAction from '../../store/actionCreators';
 import './style.scss';
 
-const Home = (props:IHomeProps) => {
+const Home:React.FunctionComponent<IHomeProps> = (props) => {
 
     return (
         <div className='ui-app'>

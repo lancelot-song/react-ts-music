@@ -1,10 +1,11 @@
 import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from 'react';
+import propTypes from 'prop-types';
 import BScroll from 'better-scroll';
-import { IScrollProps } from './type';
+import { IProps } from './type';
 import { Loading } from '../loading';
 import './style.scss';
 
-const ScrollRef = (props:IScrollProps, ref:any) => {
+const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
     //存储节点实例
     const [bScroll, setBScroll] = useState();
 
@@ -19,15 +20,12 @@ const ScrollRef = (props:IScrollProps, ref:any) => {
 
     //创建BScroll
     useEffect(()=>{
-        if(bScroll || scrollContentRef === null) return;
-        console.log(scrollContentRef);
 
-        console.log(11111111111111111)
         //实例化BScroll 并存储起来 防止多次执行
         const scroll = new BScroll(scrollContentRef.current as HTMLDivElement, {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
-            probeType : 3,
+            probeType : 2,
             click : click,
             bounce : {
                 top : bounceTop,
@@ -52,14 +50,15 @@ const ScrollRef = (props:IScrollProps, ref:any) => {
             });
         }
         if( onScroll ){
-            scroll.on('scroll', (scroll: any) => {
+            scroll.on('scroll', (scroll2: any) => {
+                console.log(scroll);
                 onScroll();
             })
         }
         if( refresh ){
             scroll.refresh();
         }
-
+        console.log(scroll);
         return ()=>{
             scroll.destroy();
             setBScroll(null);
@@ -85,7 +84,7 @@ const ScrollRef = (props:IScrollProps, ref:any) => {
     )
 }
 
-const Scroll = forwardRef<HTMLDivElement, IScrollProps>(ScrollRef);
+const Scroll = forwardRef<HTMLDivElement, IProps>(ScrollRef);
 
 Scroll.defaultProps = {
     direction : 'vertical',
@@ -99,16 +98,4 @@ Scroll.defaultProps = {
     onPullDown : () => {},
     onScroll : () => {}
 }
-
-// Scroll.propTypes = {
-//     direction : PropTypes.oneOf(['vertical','horizental']),
-//     refresh : PropTypes.bool,
-//     click : PropTypes.bool,
-//     pullUpLoading : PropTypes.bool,
-//     pullDownLoading : PropTypes.bool,
-//     bouceTop : PropTypes.bool,
-//     bouceBottom : PropTypes.bool,
-//     onPullUp : PropTypes.func,
-//     onPullDown : PropTypes.func
-// }
-export default Scroll;
+export default React.memo(Scroll);

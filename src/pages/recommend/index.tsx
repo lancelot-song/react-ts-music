@@ -5,9 +5,10 @@ import { IRecommendProps } from './type'
 import * as commonAction from '../../store/actionCreators';
 import * as recommendAction from './store/actionCreators';
 import Scroll from '../../components/scroll';
+import './style.scss';
 
 
-const Recommend= (props:IRecommendProps) =>{
+const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const { bannerList } = props;
 
     const commonStatusChange = () =>{
@@ -25,7 +26,7 @@ const Recommend= (props:IRecommendProps) =>{
             <Scroll 
                 direction='vertical'
                 bounceBottom={true}
-                bounceTop={true}
+                bounceTop={false}
                 onScroll={()=>forceCheck()}
                 onPullUp={()=>{}}
                 onPullDown={()=>{}}
@@ -33,65 +34,89 @@ const Recommend= (props:IRecommendProps) =>{
                 pullUpLoading={true}>
                 <div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                     <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
-                    <div>11111</div>
+                    <div>22222</div>
+                    <div>33333</div>
+                    <div>44444</div>
+                    <div>55555</div>
+                    <div>66666</div>
+                    <div>77777</div>
                 </div>
             </Scroll>
         </div>

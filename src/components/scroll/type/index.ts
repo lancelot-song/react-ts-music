@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 type TEnterLoading = 'horizental' | 'vertical';
 
-export interface IScrollProps {
+export interface IProps {
     direction : TEnterLoading;
     click? : boolean;
     refresh? : boolean;
