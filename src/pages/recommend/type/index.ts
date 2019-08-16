@@ -43,4 +43,5 @@ export interface IRecommendProps{
     bannerList : TBannerList;
     commonStatusChange:(status:boolean)=>void;
     requestBannerList:()=>void;
+    requestBannerListRefresh:(endCallback:()=>void)=>void;
 }

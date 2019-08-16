@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from 'react';
-import propTypes from 'prop-types';
 import BScroll from 'better-scroll';
+import PullRefresh from '../pullRefresh';
 import { IProps } from './type';
 import { Loading } from '../loading';
 import './style.scss';
@@ -10,23 +10,23 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
     const [bScroll, setBScroll] = useState();
 
     //获取BScroll配置参数
-    const { direction, refresh, click, pullUpLoading, pullDownLoading, bounceTop, bounceBottom } = props;
+    const { direction, refresh, click, pullLoading, bounceTime, bounceTop, bounceBottom, pullRefresh } = props;
 
     //监听BScroll事件回调
-    const { onPullUp, onPullDown, onScroll } = props;
+    const { onPullUp, onPullDown, onScroll, onPullRefresh } = props;
 
     //创建ref钩子
     const scrollContentRef = useRef<HTMLDivElement>(null);
 
     //创建BScroll
     useEffect(()=>{
-
         //实例化BScroll 并存储起来 防止多次执行
         const scroll = new BScroll(scrollContentRef.current as HTMLDivElement, {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
             probeType : 2,
             click : click,
+            pullDownRefresh : pullRefresh,
             bounce : {
                 top : bounceTop,
                 bottom : bounceBottom
@@ -43,22 +43,30 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
             });
         }
         if( onPullDown ){
-            scroll.on('touchEnd', (pos: { y: number; })=>{
+            scroll.on('touchEnd', (pos)=>{
                 if( pos.y > 50 ){
                     onPullDown();
                 }
             });
         }
         if( onScroll ){
-            scroll.on('scroll', (scroll2: any) => {
-                console.log(scroll);
+            scroll.on('scroll', (pos) => {
                 onScroll();
+            })
+        }
+        if( onPullRefresh ){
+            scroll.on('pullingDown', () => {
+                onPullRefresh(()=>{
+                    scroll.finishPullDown();
+                    setTimeout(()=>{
+                        scroll.refresh();
+                    }, bounceTime);
+                });
             })
         }
         if( refresh ){
             scroll.refresh();
         }
-        console.log(scroll);
         return ()=>{
             scroll.destroy();
             setBScroll(null);
@@ -73,13 +81,12 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
             }
         }
     }));
-    const showPullUpLoading = pullUpLoading ? { display : 'block' } : { display : 'none' };
-    const showPullDownLoading = pullDownLoading ? { display : 'block' } : { display : 'none' };
     return (
         <div className='ui-scroll-content' ref={scrollContentRef}>
-            { props.children }
-            <div className='ui-pull-up' style={ showPullUpLoading }><Loading /></div>
-            <div className='ui-pull-down' style={ showPullDownLoading }><Loading /></div>
+            <div>
+                { props.children }
+                { onPullRefresh && <PullRefresh /> }
+            </div>
         </div>
     )
 }
@@ -88,14 +95,16 @@ const Scroll = forwardRef<HTMLDivElement, IProps>(ScrollRef);
 
 Scroll.defaultProps = {
     direction : 'vertical',
+    bounceTime : 800,
     refresh : true,
     click : true,
-    pullUpLoading : false,
-    pullDownLoading : false,
+    pullLoading : false,
     bounceTop : true,
     bounceBottom : true,
+    pullRefresh : false,
     onPullUp : () => {},
     onPullDown : () => {},
-    onScroll : () => {}
+    onScroll : () => {},
+    onPullRefresh : () => {}
 }
 export default React.memo(Scroll);

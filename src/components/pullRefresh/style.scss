@@ -1,5 +1,7 @@
 .ui-pull-refresh{
     position: absolute;
+    left:50%;
+    top:-2rem;
     width:1.5rem;
     height:1.5rem;
     border-radius: 50%;
@@ -8,10 +10,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transform:translateX(-50%);
     .icon{
         position: relative;
         display: block;
         width:80%;
+        height: 80%;
         background-color:#ce250f;
         border-radius:50%;
     }

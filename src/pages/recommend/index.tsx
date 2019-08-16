@@ -21,102 +21,105 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
         }
     },[]);
 
+
     return (
         <div className='ui-content'>
             <Scroll 
                 direction='vertical'
                 bounceBottom={true}
-                bounceTop={false}
+                bounceTop={true}
                 onScroll={()=>forceCheck()}
                 onPullUp={()=>{}}
                 onPullDown={()=>{}}
-                pullDownLoading={true}
-                pullUpLoading={true}>
-                <div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
-                    <div>11111</div>
-                    <div>22222</div>
-                    <div>33333</div>
-                    <div>44444</div>
-                    <div>55555</div>
-                    <div>66666</div>
-                    <div>77777</div>
+                onPullRefresh={props.requestBannerListRefresh}
+                pullRefresh={true}>
+                <div className='ui-content-swipe'>
+                    <div className='ui-content-swipe-view'>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                        <div>11111</div>
+                        <div>22222</div>
+                        <div>33333</div>
+                        <div>44444</div>
+                        <div>55555</div>
+                        <div>66666</div>
+                        <div>77777</div>
+                    </div>
                 </div>
             </Scroll>
         </div>
@@ -133,6 +136,10 @@ const mapProps = (dispatch:any) => ({
     },
     requestBannerList : () =>{
         dispatch( recommendAction.requestBannerList() );
+    },
+    requestBannerListRefresh : async(endCallback:any) =>{
+        dispatch( recommendAction.requestBannerList() );
+        endCallback();
     }
 });
 
