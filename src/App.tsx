@@ -9,9 +9,7 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <HashRouter>
-        <Switch>
           <Routers />
-        </Switch>
       </HashRouter>
     </Provider>
   );

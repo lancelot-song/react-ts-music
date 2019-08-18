@@ -5,7 +5,18 @@ import * as constants from './constants';
 const defaultState = fromJS({
     bannerList :[],
     recommendList :[],
-    enterLoading : true
+    enterLoading : true,
+    scrollConfig : {
+        direction : 'vertical',
+        bounce:{
+            top:true,
+            bottom:true
+        },
+        pullRefresh : {
+            threshold : 90,
+            stop : 45
+        }
+    }
 });
 
 type TAction = {

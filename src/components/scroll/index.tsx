@@ -9,8 +9,16 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
     //存储节点实例
     const [bScroll, setBScroll] = useState();
 
+    //下拉刷新：已下拉距离
+    const [pullRefreshOffset, setPullRefreshOffset] = useState(0);
+
+    //下拉刷新：是否在刷新中
+    const [isPullRefreshing, setIsPullRefreshing] = useState(false);
+
     //获取BScroll配置参数
-    const { direction, refresh, click, pullLoading, bounceTime, bounceTop, bounceBottom, pullRefresh } = props;
+    const { direction, refresh, click, bounceTime, bounce, pullDownRefresh } = props;
+    const bounceTop = typeof bounce === 'object' ? bounce.top : !!bounce;
+    const bounceBottom = typeof bounce === 'object' ? bounce.top : !!bounce;
 
     //监听BScroll事件回调
     const { onPullUp, onPullDown, onScroll, onPullRefresh } = props;
@@ -20,13 +28,12 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
 
     //创建BScroll
     useEffect(()=>{
-        //实例化BScroll 并存储起来 防止多次执行
         const scroll = new BScroll(scrollContentRef.current as HTMLDivElement, {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
             probeType : 2,
             click : click,
-            pullDownRefresh : pullRefresh,
+            pullDownRefresh : pullDownRefresh,
             bounce : {
                 top : bounceTop,
                 bottom : bounceBottom
@@ -52,14 +59,18 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
         if( onScroll ){
             scroll.on('scroll', (pos) => {
                 onScroll();
+                onPullRefresh && pos.y > 0 && setPullRefreshOffset(pos.y);
             })
         }
+        //监听下拉刷新触发时进入loading状态 同时 调用父组件传来的onPullRefresh 父组件执行成功后 再回调此组件 移除loading状态
         if( onPullRefresh ){
             scroll.on('pullingDown', () => {
+                setIsPullRefreshing(true);
                 onPullRefresh(()=>{
                     scroll.finishPullDown();
                     setTimeout(()=>{
                         scroll.refresh();
+                        setIsPullRefreshing(false);
                     }, bounceTime);
                 });
             })
@@ -85,7 +96,11 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
         <div className='ui-scroll-content' ref={scrollContentRef}>
             <div>
                 { props.children }
-                { onPullRefresh && <PullRefresh /> }
+                { onPullRefresh 
+                    && <PullRefresh 
+                        isRefreshing={isPullRefreshing}
+                        threshold={typeof pullDownRefresh === 'object' && pullDownRefresh.threshold || 90} 
+                        offset={pullRefreshOffset} /> }
             </div>
         </div>
     )
@@ -96,12 +111,13 @@ const Scroll = forwardRef<HTMLDivElement, IProps>(ScrollRef);
 Scroll.defaultProps = {
     direction : 'vertical',
     bounceTime : 800,
-    refresh : true,
     click : true,
-    pullLoading : false,
-    bounceTop : true,
-    bounceBottom : true,
-    pullRefresh : false,
+    bounce : {
+        top:true,
+        bottom:true
+    },
+    pullDownRefresh : false,
+    refresh : true,
     onPullUp : () => {},
     onPullDown : () => {},
     onScroll : () => {},

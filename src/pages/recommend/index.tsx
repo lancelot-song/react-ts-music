@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { forceCheck } from 'react-lazyload';
+import SliderImg from '../../components/sliderImg';
 import { IRecommendProps } from './type'
 import * as commonAction from '../../store/actionCreators';
 import * as recommendAction from './store/actionCreators';
@@ -9,11 +10,7 @@ import './style.scss';
 
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
-    const { bannerList } = props;
-
-    const commonStatusChange = () =>{
-        props.commonStatusChange(!props.status);
-    }
+    const { bannerList, scrollConfig } = props;
 
     useEffect(()=>{
         if( !bannerList.length ){
@@ -21,106 +18,15 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
         }
     },[]);
 
-
     return (
         <div className='ui-content'>
             <Scroll 
                 direction='vertical'
-                bounceBottom={true}
-                bounceTop={true}
                 onScroll={()=>forceCheck()}
-                onPullUp={()=>{}}
-                onPullDown={()=>{}}
                 onPullRefresh={props.requestBannerListRefresh}
-                pullRefresh={true}>
-                <div className='ui-content-swipe'>
-                    <div className='ui-content-swipe-view'>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                        <div>11111</div>
-                        <div>22222</div>
-                        <div>33333</div>
-                        <div>44444</div>
-                        <div>55555</div>
-                        <div>66666</div>
-                        <div>77777</div>
-                    </div>
-                </div>
+                bounce={scrollConfig.bounce}
+                pullDownRefresh={scrollConfig.pullDownRefresh}>
+                <SliderImg bannerList={bannerList} />
             </Scroll>
         </div>
     )
@@ -128,18 +34,22 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
 
 const mapState = (state:any) => ({
     status : state.getIn(['common','status']),
-    bannerList : state.getIn(['recommend','bannerList']).toJS()
+    bannerList : state.getIn(['recommend','bannerList']).toJS(),
+    scrollConfig : state.getIn(['recommend','scrollConfig']).toJS()
 });
 const mapProps = (dispatch:any) => ({
-    commonStatusChange : (status:boolean) =>{
-        dispatch( commonAction.commonStatusChange(status) );
-    },
     requestBannerList : () =>{
         dispatch( recommendAction.requestBannerList() );
     },
-    requestBannerListRefresh : async(endCallback:any) =>{
-        dispatch( recommendAction.requestBannerList() );
-        endCallback();
+    requestBannerListRefresh : async(refreshCallback:any) =>{
+        //伪造 请求数据延迟2秒 看看刷新效果如何
+        await new Promise((resolve)=>{
+            setTimeout(function(){
+                dispatch( recommendAction.requestBannerList() );
+                resolve()
+            },3000);
+        });
+        refreshCallback();
     }
 });
 

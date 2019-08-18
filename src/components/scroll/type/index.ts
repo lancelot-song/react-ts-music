@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import { BsOption } from 'better-scroll'
+export type TBsOption = Partial<BsOption>;
 
 type TEnterLoading = 'horizental' | 'vertical';
 
@@ -8,15 +10,10 @@ type TPullDownRefreshObject = {
 }
 type TPullDownRefresh = boolean | TPullDownRefreshObject;
 
-export interface IProps {
+export interface IProps extends TBsOption{
     direction : TEnterLoading;
-    click? : boolean;
     refresh? : boolean;
-    bounceTop? : boolean;
-    bounceBottom? : boolean;
-    pullRefresh? : TPullDownRefresh;
     pullLoading? : boolean;
-    bounceTime? : number;
     onScroll? : () => void;
     onPullUp? : () => void;
     onPullDown? : () => void;

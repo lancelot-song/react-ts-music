@@ -1,5 +1,6 @@
 export interface IProps{
-    onRefresh : () => void;
-    initOffset? : number;
-    maxOffset? : number;
+    threshold : number;
+    offset : number;
+    isRefreshing : boolean;
+    rotate? : number;
 }

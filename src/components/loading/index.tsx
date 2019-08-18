@@ -1,7 +1,9 @@
 import React from 'react';
-
+import './style.scss';
 export const Loading = () => {
     return (
-        <div>loading...</div>
+        <div className="ui-loading">
+          <div className="loader"></div>
+        </div>
     )
 }
