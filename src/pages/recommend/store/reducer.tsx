@@ -1,9 +1,41 @@
+import React from 'react';
 import { fromJS } from 'immutable';
 import * as constants from './constants';
 
+import { ReactComponent as IconData }  from '../../../assets/images/icon-date.svg';
+import { ReactComponent as IconMusic }  from '../../../assets/images/icon-music.svg';
+import { ReactComponent as IconHot }  from '../../../assets/images/icon-hot.svg';
+import { ReactComponent as IconVideo }  from '../../../assets/images/icon-video.svg';
+
 
 const defaultState = fromJS({
-    bannerList :[],
+    bannerList : [],
+    bannerConfig : { 
+        autoplay : {
+            delay : 5000
+        }
+    },
+    menuList : [{
+        title : '每日推荐',
+        icon : <IconData/>,
+        url :''
+    },{
+        title : '歌单',
+        icon : <IconMusic/>,
+        url :''
+    },{
+        title : '排行榜',
+        icon : <IconHot/>,
+        url :''
+    },{
+        title : '电台',
+        icon : <IconMusic />,
+        url :''
+    },{
+        title : '直播',
+        icon : <IconVideo />,
+        url :''
+    }],
     recommendList :[],
     enterLoading : true,
     scrollConfig : {
@@ -12,9 +44,9 @@ const defaultState = fromJS({
             top:true,
             bottom:true
         },
-        pullRefresh : {
+        pullDownRefresh : {
             threshold : 90,
-            stop : 45
+            stop : 50
         }
     }
 });

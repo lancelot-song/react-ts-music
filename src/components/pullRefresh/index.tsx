@@ -1,7 +1,19 @@
+/*
+ * @Author: songzhiheng 
+ * @Date: 2019-08-19 13:32:39 
+ * @Last Modified by: songzhiheng
+ * @Last Modified time: 2019-08-19 16:14:37
+ */
 import React, { useState, useEffect } from 'react';
 import { ReactComponent as IconRefresh } from '../../assets/images/icon-refresh.svg';
-import { IProps } from './type';
 import './style.scss';
+
+export interface IProps{
+    threshold : number;
+    offset : number;
+    isRefreshing : boolean;
+    rotate? : number;
+}
 
 const PullRefrsh: React.FunctionComponent<IProps> = (props) => {
 
@@ -14,7 +26,7 @@ const PullRefrsh: React.FunctionComponent<IProps> = (props) => {
         'opacity' : 0
     });
 
-
+    //根据用户下拉距离，计算滚动效果与透明效果
     useEffect(()=>{
         let thresholdOffset = threshold > offset ? offset : threshold;
         let rotateNum = rotate as number * 360 / threshold * thresholdOffset;

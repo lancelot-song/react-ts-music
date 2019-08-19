@@ -1,13 +1,19 @@
+/*
+ * @Author: songzhiheng 
+ * @Date: 2019-08-19 13:33:22 
+ * @Last Modified by:   songzhiheng 
+ * @Last Modified time: 2019-08-19 13:33:22 
+ */
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import routerPath from '../api/routerPath';
 import Home from '../pages/home';
-import { Loading } from '../components/loading';
+import Loading from '../components/loading';
 
 const LoadableRecommend = Loadable({
     loader : () => import('../pages/recommend'),
-    loading : Loading
+    loading : () => <Loading scale={1} />
 });
 
 const Routers = () =>{

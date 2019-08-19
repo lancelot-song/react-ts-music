@@ -1,4 +1,10 @@
-import React, { useEffect } from 'react';
+/*
+ * @Author: songzhiheng 
+ * @Date: 2019-08-19 13:33:05 
+ * @Last Modified by: songzhiheng
+ * @Last Modified time: 2019-08-19 16:42:56
+ */
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { IHomeProps } from './type'
@@ -20,7 +26,6 @@ const Home:React.FunctionComponent<IHomeProps> = (props) => {
                     </div>
                     <Link to='/search' className='btn-search'></Link>
                 </div>
-                <div className='ui-menu'></div>
                 { props.children }
         </div>
     )

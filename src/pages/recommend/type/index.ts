@@ -1,11 +1,29 @@
-import { IProps as IScrollConfig } from '../../../components/scroll/type';
+/*
+ * @Author: songzhiheng 
+ * @Date: 2019-08-19 13:33:14 
+ * @Last Modified by: songzhiheng
+ * @Last Modified time: 2019-08-19 16:37:28
+ */
+import React from 'react';
+import { SwiperOptions } from 'swiper';
+import { IProps as IScrollConfig } from '../../../components/scroll';
+
 //加载状态
 export type TEnterLoading = boolean;
+
+//推荐菜单列表
+export interface IMenuList {
+    title : string;
+    icon : React.ReactNode,
+    url : string;
+}
 
 export interface IRecommendProps{
     status : boolean;
     bannerList : [];
+    menuList : IMenuList[];
     scrollConfig : IScrollConfig;
+    bannerConfig : SwiperOptions;
     commonStatusChange:(status:boolean)=>void;
     requestBannerList:()=>void;
     requestBannerListRefresh:(endCallback:()=>void)=>void;

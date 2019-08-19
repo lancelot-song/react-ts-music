@@ -1,7 +1,13 @@
+/*
+ * @Author: songzhiheng 
+ * @Date: 2019-08-19 14:07:20 
+ * @Last Modified by: songzhiheng
+ * @Last Modified time: 2019-08-19 15:08:15
+ */
 import { fromJS } from 'immutable';
 import { Dispatch } from 'redux';
 import * as constants from './constants';
-import { getBannerList, getRecommendList } from '../../..//api/request';
+import { getBannerList, getRecommendList } from '../../../api/request';
 
 export const changeBannerList = (data:any) => ({
     type : constants.CHANGE_BANNER_LIST,
@@ -16,8 +22,7 @@ export const changeBannerList = (data:any) => ({
     data : fromJS(data)
  });
 
-
- export const requestBannerList = () => {
+export const requestBannerList = () => {
     return (dispatch:Dispatch) => {
        getBannerList().then((data:any) => {
            dispatch(changeBannerList(data.banners));

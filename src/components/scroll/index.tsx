@@ -1,18 +1,29 @@
-import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from 'react';
-import BScroll from 'better-scroll';
+/*
+ * @Author: songzhiheng 
+ * @Date: 2019-08-19 13:31:46 
+ * @Last Modified by: songzhiheng
+ * @Last Modified time: 2019-08-19 16:14:16
+ */
+import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle, ReactNode } from 'react';
+import BScroll, { BsOption } from 'better-scroll';
 import PullRefresh from '../pullRefresh';
-import { IProps } from './type';
-import { Loading } from '../loading';
 import './style.scss';
+
+export interface IProps extends Partial<BsOption>{
+    direction : 'horizental' | 'vertical';
+    refresh? : boolean;
+    pullLoading? : boolean;
+    onScroll? : () => void;
+    onPullUp? : () => void;
+    onPullDown? : () => void;
+    onPullRefresh? : (endCallback:()=>void) => void;
+    children? : ReactNode;
+}
 
 const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
     //存储节点实例
     const [bScroll, setBScroll] = useState();
-
-    //下拉刷新：已下拉距离
     const [pullRefreshOffset, setPullRefreshOffset] = useState(0);
-
-    //下拉刷新：是否在刷新中
     const [isPullRefreshing, setIsPullRefreshing] = useState(false);
 
     //获取BScroll配置参数
@@ -28,7 +39,10 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
 
     //创建BScroll
     useEffect(()=>{
-        const scroll = new BScroll(scrollContentRef.current as HTMLDivElement, {
+        if(!scrollContentRef.current){
+            return;
+        }
+        const scroll = new BScroll(scrollContentRef.current, {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
             probeType : 2,
@@ -99,7 +113,7 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
                 { onPullRefresh 
                     && <PullRefresh 
                         isRefreshing={isPullRefreshing}
-                        threshold={typeof pullDownRefresh === 'object' && pullDownRefresh.threshold || 90} 
+                        threshold={typeof pullDownRefresh === 'object' && pullDownRefresh.threshold ? pullDownRefresh.threshold : 90} 
                         offset={pullRefreshOffset} /> }
             </div>
         </div>

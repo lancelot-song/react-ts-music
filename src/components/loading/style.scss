@@ -1,6 +1,6 @@
 /* 此文件内容在index.html初始化模板中也会加载 用于第一次进入loading */
 .ui-loading{
-    position:fixed;
+    position:absolute;
     top:0px;left:0px;right:0px;bottom:0px;
     margin:auto;
     width:90px;
