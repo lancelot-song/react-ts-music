@@ -23,10 +23,26 @@ const LoadableVideo = Loadable({
 
 const defaultState = fromJS({
     sliderComponents : [
-        LoadableMe,
-        LoadableRecommend,
-        LoadableVillage,
-        LoadableVideo
+        {
+            type : 'me',
+            Component : LoadableMe,
+            loaded : false
+        },
+        {
+            type : 'recommend',
+            Component : LoadableRecommend,
+            loaded : false
+        },
+        {
+            type : 'village',
+            Component : LoadableVillage,
+            loaded : false
+        },
+        {
+            type : 'video',
+            Component : LoadableVideo,
+            loaded : false
+        }
     ],
     sliderConfig : { 
         autoplay : false,
