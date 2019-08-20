@@ -2,9 +2,9 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-20 14:48:19
+ * @Last Modified time: 2019-08-20 17:30:47
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { forceCheck } from 'react-lazyload';
@@ -14,14 +14,24 @@ import * as recommendAction from './store/actionCreators';
 import Scroll from '../../components/scroll';
 import './style.scss';
 
+export interface IBannerListUpdate extends HTMLDivElement{
+    update(): void;
+}
+
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const { bannerList, bannerConfig, scrollConfig, menuList } = props;
+
+    const BannerSwipeRef = useRef<IBannerListUpdate>(null);
 
     useEffect(()=>{
         if( !bannerList.length ){
             props.requestBannerList();
         }
     },[]);
+
+    useEffect(()=>{
+        BannerSwipeRef.current && BannerSwipeRef.current.update();
+    }, [bannerList]);
 
     const MenuList = () =>{
         return (
@@ -39,7 +49,22 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
             </div>
         )
     }
-
+    const BannerList = () =>(
+        <BannerSlider config={ bannerConfig } ref={BannerSwipeRef}>
+            <div className='swiper-wrapper'>
+            {
+                bannerList.map(item => (
+                    <div className='swiper-slide' key={item.imageUrl}>
+                        <img src={item.imageUrl} alt={item.typeTitle} />
+                        <span 
+                            className='label' 
+                            style={{ 'backgroundColor': item.titleColor }}>{item.typeTitle}</span>
+                    </div>
+                ))
+            }
+            </div>
+        </BannerSlider>
+    )
     return (
         <div className='ui-content'>
             <Scroll 
@@ -48,8 +73,22 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
                 onPullRefresh={props.requestBannerListRefresh}
                 bounce={scrollConfig.bounce}
                 pullDownRefresh={scrollConfig.pullDownRefresh}>
-                <BannerSlider listData={bannerList} config={ bannerConfig }/>
+                <BannerList />
                 <MenuList />
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
+                <div>1111111111111</div>
                 <div>1111111111111</div>
                 <div>1111111111111</div>
                 <div>1111111111111</div>

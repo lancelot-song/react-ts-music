@@ -1,7 +1,5 @@
 .ui-app{
-    position:relative;
     padding:0px 4.375%;
-    overflow: hidden;
     .ui-hd{
         position: relative;
         display: flex;
@@ -40,5 +38,12 @@
             right:0px;
             background: url(../../assets/images/icon-search.svg) 0px 0px / 100% 100%  no-repeat;
         }
+    }
+    .ui-home-swipe{
+        margin:0px auto;
+        position: fixed;
+        left:0px;top:1.9rem;bottom:0rem;
+        padding:0px;
+        width:100%;
     }
 }

@@ -13,6 +13,9 @@ const defaultState = fromJS({
     bannerConfig : { 
         autoplay : {
             delay : 5000
+        },
+        pagination: {
+            el: '.banner-swiper-pagination'
         }
     },
     menuList : [{
