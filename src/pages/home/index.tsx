@@ -34,8 +34,8 @@ const Home:React.FunctionComponent<IProps> = (props) => {
                 config={sliderConfig} > 
                 <div className='swiper-wrapper'>
                     {
-                        sliderComponents.map((item,index) => (
-                            <div className='swiper-slide' key={index}>{item}</div>
+                        sliderComponents.map((Item:any,index:number) => (
+                            <div className='swiper-slide' key={index}><Item /></div>
                         ))
                     }
                 </div>

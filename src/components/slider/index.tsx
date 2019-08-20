@@ -44,7 +44,7 @@ const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
     // useEffect(()=>{
     //     swiper && swiper.update();
     // }, [listData]);
-
+    console.log(children)
     //给外部调用的钩子
     return (
         <div className={`ui-swiper-wrap ${classNames}`}>

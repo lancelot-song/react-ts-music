@@ -10,6 +10,6 @@ import { SwiperOptions } from 'swiper';
 
 export interface IProps extends RouteComponentProps{
     sliderConfig : SwiperOptions;
-    sliderComponents : ReactNode[];
+    sliderComponents : any;//ReactNode[];
     children : ReactNode;
 }

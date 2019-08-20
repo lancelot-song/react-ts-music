@@ -23,15 +23,14 @@ const LoadableVideo = Loadable({
 
 const defaultState = fromJS({
     sliderComponents : [
-        <LoadableMe />,
-        <LoadableRecommend />,
-        <LoadableVillage />,
-        <LoadableVideo />
+        LoadableMe,
+        LoadableRecommend,
+        LoadableVillage,
+        LoadableVideo
     ],
     sliderConfig : { 
-        autoplay : {
-            delay : 5000
-        }
+        autoplay : false,
+        initialSlide : 1
     }
 });
 
