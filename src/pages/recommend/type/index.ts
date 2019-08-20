@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:14 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-19 16:37:28
+ * @Last Modified time: 2019-08-20 14:46:02
  */
 import React from 'react';
 import { SwiperOptions } from 'swiper';
@@ -24,7 +24,6 @@ export interface IRecommendProps{
     menuList : IMenuList[];
     scrollConfig : IScrollConfig;
     bannerConfig : SwiperOptions;
-    commonStatusChange:(status:boolean)=>void;
     requestBannerList:()=>void;
     requestBannerListRefresh:(endCallback:()=>void)=>void;
 }
