@@ -27,12 +27,9 @@ const SliderImg: React.FunctionComponent<IProps> = (props) => {
 
     const { listData, config } = props;
 
+    //初始化swiper插件
     useEffect(()=>{
-        if( swiper ) {
-            swiper.update();
-            return
-        }
-        if(listData && swiperRef.current){
+        if(swiperRef.current){
             const initSwiper = new Swiper( swiperRef.current, {
                 pagination: {
                     ...config,
@@ -41,11 +38,15 @@ const SliderImg: React.FunctionComponent<IProps> = (props) => {
             });
             setSwiper(initSwiper);
         }
-        return () => {
+        return ()=>{
             setSwiper(null);
         }
-    }, [listData]);
+    },[]);
 
+    //更新swiper
+    useEffect(()=>{
+        swiper && swiper.update();
+    }, [listData]);
 
     //给外部调用的钩子
     return (
