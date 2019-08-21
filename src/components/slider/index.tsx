@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, ReactNode, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle, ReactNode, forwardRef, FunctionComponent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import Swiper, { SwiperOptions } from 'swiper';
 import Loading from '../loading';
 import 'swiper/dist/css/swiper.min.css'
 import './style.scss';
 
-export interface IProps{
+export interface IProps extends RouteComponentProps<{navType? :string}>{
     config : Partial<SwiperOptions>;
     classNames ? : string;
     children? : ReactNode;
@@ -13,7 +13,7 @@ export interface IProps{
 }
 
 
-const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
+const SliderImg: FunctionComponent<IProps> = (props, ref) => {
 
     const swiperRef = useRef<HTMLDivElement>(null);
 
@@ -73,5 +73,9 @@ const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
 }
 
 
-const Slider = forwardRef<HTMLDivElement, IProps>(SliderImg);
-export default React.memo(Slider);
+interface IForwardRef{
+    update?(): void;
+    switchRouter?(): void
+}
+const Slider = forwardRef<IForwardRef, IProps>(SliderImg);
+export default withRouter(React.memo(Slider));
