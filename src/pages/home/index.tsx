@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:05 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-20 17:32:53
+ * @Last Modified time: 2019-08-21 18:06:44
  */
 import React, { useRef } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
@@ -14,8 +14,9 @@ import { IProps } from './type'
 import './style.scss';
 
 const Home:React.FunctionComponent<IProps> = (props) => {
-    const { sliderComponents, sliderConfig } = props;
+    const { sliderComponents, sliderConfig, match } = props;
     const HomeSwipeRef = useRef(null);
+    const switchRouterAry = sliderComponents.map(item=>`${routerPath.home.default}/${item.type}`);
     return (
         <div className='ui-app'>
             <div className='ui-hd'>
@@ -31,12 +32,17 @@ const Home:React.FunctionComponent<IProps> = (props) => {
             <HomeSwipe
                 ref={HomeSwipeRef}
                 classNames='ui-home-swipe'
-                config={sliderConfig} > 
+                config={sliderConfig}
+                switchRouter={switchRouterAry}> 
                 <div className='swiper-wrapper'>
                     {
-                        sliderComponents.map((Item:any,index:number) => (
-                            <div className='swiper-slide' key={index}><Item /></div>
-                        ))
+                        sliderComponents.map((Item:any,index:number) => {
+                            return (
+                                <div className='swiper-slide' key={index}>
+                                    { Item.type === match.params.navType && <Item.Component />}
+                                </div>
+                            )
+                        })
                     }
                 </div>
             </HomeSwipe>

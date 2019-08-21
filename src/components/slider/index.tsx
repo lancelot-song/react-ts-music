@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef, useImperativeHandle, ReactNode, forwardRef } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import Swiper, { SwiperOptions } from 'swiper';
 import Loading from '../loading';
 import 'swiper/dist/css/swiper.min.css'
 import './style.scss';
 
-export interface IProps {
+export interface IProps{
     config : Partial<SwiperOptions>;
     classNames ? : string;
     children? : ReactNode;
+    switchRouter? : string[];
 }
 
 
@@ -17,7 +19,7 @@ const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
 
     const [ swiper, setSwiper ] = useState();
 
-    const { config, children, classNames,  } = props;
+    const { config, children, classNames, switchRouter } = props;
 
     //初始化swiper插件
     useEffect(()=>{
@@ -25,6 +27,12 @@ const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
             const initSwiper = new Swiper( swiperRef.current, {
                 ...config
             });
+            if(switchRouter){
+                initSwiper.on('slideChange', function(){
+                    console.log(props);
+                    console.log(initSwiper.activeIndex);
+                });
+            }
             setSwiper(initSwiper);
         }
         return ()=>{
@@ -36,6 +44,9 @@ const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
     //给外部调用的钩子
     useImperativeHandle(ref, ()=>({
         update(){
+            swiper && swiper.update();
+        },
+        switchRouter(){
             swiper && swiper.update();
         }
     }));
@@ -60,6 +71,7 @@ const SliderImg: React.FunctionComponent<IProps> = (props, ref) => {
         </div>
     )
 }
+
 
 const Slider = forwardRef<HTMLDivElement, IProps>(SliderImg);
 export default React.memo(Slider);

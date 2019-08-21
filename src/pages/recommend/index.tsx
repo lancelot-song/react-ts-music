@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-20 17:30:47
+ * @Last Modified time: 2019-08-21 18:06:44
  */
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,13 +15,12 @@ import Scroll from '../../components/scroll';
 import './style.scss';
 
 export interface IBannerListUpdate extends HTMLDivElement{
-    update(): void;
 }
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const { bannerList, bannerConfig, scrollConfig, menuList } = props;
 
-    const BannerSwipeRef = useRef<IBannerListUpdate>(null);
+    const BannerSwipeRef = useRef<HTMLDivElement>(null);
 
     useEffect(()=>{
         if( !bannerList.length ){
@@ -30,7 +29,6 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     },[]);
 
     useEffect(()=>{
-        BannerSwipeRef.current && BannerSwipeRef.current.update();
     }, [bannerList]);
 
     const MenuList = () =>{
