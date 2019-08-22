@@ -4,7 +4,7 @@
  * @Last Modified by: songzhiheng
  * @Last Modified time: 2019-08-20 14:29:25
  */
-import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle, ReactNode } from 'react';
+import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle, ReactNode, RefForwardingComponent } from 'react';
 import BScroll, { BsOption } from 'better-scroll';
 import PullRefresh from '../pullRefresh';
 import './style.scss';
@@ -19,21 +19,18 @@ export interface IProps extends Partial<BsOption>{
     onPullRefresh? : (endCallback:()=>void) => void;
     children? : ReactNode;
 }
+export type TScrollRefresh = {
+    refresh():void;
+}
 
-const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
+const Scroll: RefForwardingComponent<TScrollRefresh, IProps> = (props, ref) => {
     //存储节点实例
     const [bScroll, setBScroll] = useState();
     const [pullRefreshOffset, setPullRefreshOffset] = useState(0);
     const [isPullRefreshing, setIsPullRefreshing] = useState(false);
 
-    //获取BScroll配置参数
-    const { direction, refresh, click, bounceTime, bounce, pullDownRefresh } = props;
-    const bounceTop = typeof bounce === 'object' ? bounce.top : !!bounce;
-    const bounceBottom = typeof bounce === 'object' ? bounce.top : !!bounce;
-
-    //监听BScroll事件回调
-    const { onPullUp, onPullDown, onScroll, onPullRefresh } = props;
-
+    //下拉刷新参数配置
+    const { pullDownRefresh, onPullRefresh } = props;
     //创建ref钩子
     const scrollContentRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +39,10 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
         if(!scrollContentRef.current){
             return;
         }
+        //监听BScroll事件回调
+        const { onPullUp, onPullDown, onScroll } = props;
+        const { direction, refresh, click, bounceTime, bounce } = props;
+
         const scroll = new BScroll(scrollContentRef.current, {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
@@ -49,8 +50,8 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
             click : click,
             pullDownRefresh : pullDownRefresh,
             bounce : {
-                top : bounceTop,
-                bottom : bounceBottom
+                top : typeof bounce === 'object' ? bounce.top : !!bounce,
+                bottom : typeof bounce === 'object' ? bounce.top : !!bounce
             }
         });
         setBScroll(scroll);
@@ -119,22 +120,4 @@ const ScrollRef: React.FunctionComponent<IProps> = (props, ref) => {
         </div>
     )
 }
-
-const Scroll = forwardRef<HTMLDivElement, IProps>(ScrollRef);
-
-Scroll.defaultProps = {
-    direction : 'vertical',
-    bounceTime : 800,
-    click : true,
-    bounce : {
-        top:true,
-        bottom:true
-    },
-    pullDownRefresh : false,
-    refresh : true,
-    onPullUp : () => {},
-    onPullDown : () => {},
-    onScroll : () => {},
-    onPullRefresh : () => {}
-}
-export default React.memo(Scroll);
+export default React.memo(forwardRef(Scroll));

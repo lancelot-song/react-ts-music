@@ -9,26 +9,35 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import HomeSwipe from '../../components/slider';
 import routerPath from '../../api/routerPath';
-import * as homeAction from './store/actionCreators';
-import { IProps } from './type'
+import { IProps } from './type';
+import { TSliderGo } from '../../components/slider';
 import './style.scss';
 
+
 const Home:React.FunctionComponent<IProps> = (props) => {
-    const { sliderComponents, sliderConfig, match, history, loadedComponent } = props;
-    const HomeSwipeRef = useRef(null);
-    const switchRouterAry = sliderComponents.map(item=>`${item.type}`);
+    const { sliderComponents, sliderConfig, match, history } = props;
+
+    //根据url 配置slider组件位置、内容
+    const switchRouterTypes = sliderComponents.map(item=>`${item.type}`);
+    const initSliderIndex = switchRouterTypes.indexOf(match.params.navType);
+    sliderComponents[initSliderIndex]['loaded'] = true;
+    const [ loadSliderComponents, setLoadSliderComponents ] = useState(sliderComponents);
+
+    //根据路由变化控制slider加载的组件
+    const SliderRef = useRef<TSliderGo>(null);
+    useEffect(()=>{
+        SliderRef.current && SliderRef.current.go( switchRouterTypes.indexOf(match.params.navType) );
+    },[match.params.navType])
     const onSwitchRouter = (swipeIndex:number) =>{
-        loadedComponent( sliderComponents, swipeIndex );
-        history.push( `${routerPath.home.default}/${switchRouterAry[swipeIndex]}` );
+        loadSliderComponents[swipeIndex]['loaded'] = true;
+        setLoadSliderComponents(loadSliderComponents);
+        history.push( `${routerPath.home.default}/${switchRouterTypes[swipeIndex]}` );
     }
-    const [ sliderConfigMerge, setSliderConfigMerge ] = useState({
+
+    const sliderConfigMerge = {
         ...sliderConfig,
-        initialSlide : switchRouterAry.indexOf(match.params.navType)
-    });
-    
-    useEffect(() => {
-        loadedComponent( sliderComponents, switchRouterAry.indexOf(match.params.navType) );
-    }, []);
+        initialSlide : initSliderIndex
+    }
     return (
         <div className='ui-app'>
             <div className='ui-hd'>
@@ -42,16 +51,16 @@ const Home:React.FunctionComponent<IProps> = (props) => {
                 <Link to='/search' className='btn-search'></Link>
             </div>
             <HomeSwipe
-                ref={HomeSwipeRef}
+                ref={SliderRef}
                 classNames='ui-home-swipe'
                 config={sliderConfigMerge}
                 onSwitchIndex={onSwitchRouter}> 
                 <div className='swiper-wrapper'>
                     {
-                        sliderComponents.map((Item:any,index:number) => {
+                        loadSliderComponents.map((Item:any,index:number) => {
                             return (
                                 <div className='swiper-slide' key={index}>
-                                    { Item.loaded && <Item.Component />}
+                                    { Item.loaded && <Item.Component /> }
                                 </div>
                             )
                         })
@@ -67,10 +76,4 @@ const mapState = (state:any) => ({
     sliderConfig : state.getIn(['home','sliderConfig']).toJS(),
     sliderComponents : state.getIn(['home','sliderComponents']).toJS()
 });
-const mapDispatch = (dispatch:any) => ({
-    loadedComponent(components:any, loadedIndex:number){
-        components[loadedIndex]['loaded'] = true 
-        dispatch( homeAction.loadedComponent(components))
-    }
-})
-export default withRouter(connect(mapState, mapDispatch)(React.memo(Home)));
+export default withRouter(connect(mapState)(React.memo(Home)));

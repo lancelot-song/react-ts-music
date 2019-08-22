@@ -12,16 +12,13 @@ import BannerSlider from '../../components/slider';
 import { IRecommendProps } from './type'
 import * as recommendAction from './store/actionCreators';
 import Scroll from '../../components/scroll';
+import { TSliderUpdate } from '../../components/slider';
 import './style.scss';
-
-export interface IBannerListUpdate{
-    update():void
-}
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const { bannerList, bannerConfig, scrollConfig, menuList } = props;
 
-    const BannerSwipeRef = useRef<IBannerListUpdate>(null);
+    const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
     useEffect(()=>{
         if( !bannerList.length ){

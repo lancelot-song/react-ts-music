@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, ReactNode, forwardRef, FunctionComponent } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle, ReactNode, forwardRef, RefForwardingComponent } from 'react';
 import Swiper, { SwiperOptions } from 'swiper';
 import Loading from '../loading';
 import 'swiper/dist/css/swiper.min.css'
@@ -10,8 +10,15 @@ export interface IProps{
     children? : ReactNode;
     onSwitchIndex? : (index:number)=>void; 
 }
+export type TSliderUpdate = {
+    update(): void;
+}
+export type TSliderGo = {
+    go: (index:number)=>void
+}
+export type TSliderRef = Partial<TSliderUpdate> & Partial<TSliderGo>;
 
-const SliderImg: FunctionComponent<IProps> = (props, ref) => {
+const Slider: RefForwardingComponent<TSliderRef,IProps> = (props, ref) => {
 
     const swiperRef = useRef<HTMLDivElement>(null);
 
@@ -37,15 +44,14 @@ const SliderImg: FunctionComponent<IProps> = (props, ref) => {
         }
     },[]);
 
-    
     //给外部调用的钩子
     useImperativeHandle(ref, ()=>({
         update(){
             swiper && swiper.update();
+        },
+        go(index){
+            swiper && swiper.slideTo(index);
         }
-        // switchRouter(){
-        //     swiper && swiper.update();
-        // }
     }));
 
     return (
@@ -63,10 +69,4 @@ const SliderImg: FunctionComponent<IProps> = (props, ref) => {
     )
 }
 
-
-interface IForwardRef{
-    update?(): void;
-    switchRouter?(): void
-}
-const Slider = forwardRef<IForwardRef, IProps>(SliderImg);
-export default React.memo(Slider);
+export default React.memo(forwardRef(Slider));

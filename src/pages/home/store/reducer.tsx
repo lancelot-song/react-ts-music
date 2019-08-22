@@ -51,10 +51,5 @@ const defaultState = fromJS({
     }
 });
 export default (state = defaultState, action:TAction) => {
-    switch(action.type){
-        case constants.HOME_LOADED :
-            return state.set('sliderComponents', action.data);
-        default:;
-    }
     return state;
 }

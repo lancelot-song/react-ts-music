@@ -1,1 +1,1 @@
-export const HOME_LOADED = 'home/LOADED';
+export default {}

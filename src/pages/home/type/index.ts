@@ -22,5 +22,4 @@ export interface IProps extends RouteComponentProps<{navType : string}>{
     sliderConfig : SwiperOptions;
     sliderComponents : TSliderComponents[];//ReactNode[];
     children : ReactNode;
-    loadedComponent : (arg0: TSliderComponents[], arg1: number)=>void;
 }
