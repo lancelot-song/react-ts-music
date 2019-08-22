@@ -2,7 +2,8 @@ import React from 'react';
 import { fromJS } from 'immutable';
 import Loadable from 'react-loadable';
 import Loading from '../../../components/loading';
-
+import { TAction } from '../type';
+import * as constants from './constants';
 
 const LoadableMe = Loadable({
     loader : () => import('../../../pages/recommend'),
@@ -23,21 +24,37 @@ const LoadableVideo = Loadable({
 
 const defaultState = fromJS({
     sliderComponents : [
-        LoadableMe,
-        LoadableRecommend,
-        LoadableVillage,
-        LoadableVideo
+        {
+            type : 'me',
+            Component : LoadableMe,
+            loaded : false
+        },
+        {
+            type : 'recommend',
+            Component : LoadableRecommend,
+            loaded : false
+        },
+        {
+            type : 'village',
+            Component : LoadableVillage,
+            loaded : false
+        },
+        {
+            type : 'video',
+            Component : LoadableVideo,
+            loaded : false
+        }
     ],
     sliderConfig : { 
         autoplay : false,
         initialSlide : 1
     }
 });
-
-type TAction = {
-    type : string;
-    data : object[] | boolean;
-}
 export default (state = defaultState, action:TAction) => {
+    switch(action.type){
+        case constants.HOME_LOADED :
+            return state.set('sliderComponents', action.data);
+        default:;
+    }
     return state;
 }

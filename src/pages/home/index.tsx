@@ -2,21 +2,33 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:05 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-21 18:06:44
+ * @Last Modified time: 2019-08-22 17:44:31
  */
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import HomeSwipe from '../../components/slider';
 import routerPath from '../../api/routerPath';
-import * as commonAction from '../../store/actionCreators';
+import * as homeAction from './store/actionCreators';
 import { IProps } from './type'
 import './style.scss';
 
 const Home:React.FunctionComponent<IProps> = (props) => {
-    const { sliderComponents, sliderConfig, match } = props;
+    const { sliderComponents, sliderConfig, match, history, loadedComponent } = props;
     const HomeSwipeRef = useRef(null);
-    const switchRouterAry = sliderComponents.map(item=>`${routerPath.home.default}/${item.type}`);
+    const switchRouterAry = sliderComponents.map(item=>`${item.type}`);
+    const onSwitchRouter = (swipeIndex:number) =>{
+        loadedComponent( sliderComponents, swipeIndex );
+        history.push( `${routerPath.home.default}/${switchRouterAry[swipeIndex]}` );
+    }
+    const [ sliderConfigMerge, setSliderConfigMerge ] = useState({
+        ...sliderConfig,
+        initialSlide : switchRouterAry.indexOf(match.params.navType)
+    });
+    
+    useEffect(() => {
+        loadedComponent( sliderComponents, switchRouterAry.indexOf(match.params.navType) );
+    }, []);
     return (
         <div className='ui-app'>
             <div className='ui-hd'>
@@ -32,14 +44,14 @@ const Home:React.FunctionComponent<IProps> = (props) => {
             <HomeSwipe
                 ref={HomeSwipeRef}
                 classNames='ui-home-swipe'
-                config={sliderConfig}
-                switchRouter={switchRouterAry}> 
+                config={sliderConfigMerge}
+                onSwitchIndex={onSwitchRouter}> 
                 <div className='swiper-wrapper'>
                     {
                         sliderComponents.map((Item:any,index:number) => {
                             return (
                                 <div className='swiper-slide' key={index}>
-                                    { Item.type === match.params.navType && <Item.Component />}
+                                    { Item.loaded && <Item.Component />}
                                 </div>
                             )
                         })
@@ -52,14 +64,13 @@ const Home:React.FunctionComponent<IProps> = (props) => {
 }
 
 const mapState = (state:any) => ({
-    status : state.getIn(['common','status']),
     sliderConfig : state.getIn(['home','sliderConfig']).toJS(),
     sliderComponents : state.getIn(['home','sliderComponents']).toJS()
 });
-const mapProps = (dispatch:any) => ({
-    commonStatusChange : (status:boolean) =>{
-        dispatch( commonAction.commonStatusChange(status) );
+const mapDispatch = (dispatch:any) => ({
+    loadedComponent(components:any, loadedIndex:number){
+        components[loadedIndex]['loaded'] = true 
+        dispatch( homeAction.loadedComponent(components))
     }
-});
-
-export default withRouter(connect(mapState, mapProps)(Home));
+})
+export default withRouter(connect(mapState, mapDispatch)(React.memo(Home)));

@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-21 18:06:44
+ * @Last Modified time: 2019-08-22 10:20:09
  */
 import React, { useEffect, useRef, } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ import * as recommendAction from './store/actionCreators';
 import Scroll from '../../components/scroll';
 import './style.scss';
 
-export interface IBannerListUpdate extends HTMLDivElement{
+export interface IBannerListUpdate{
     update():void
 }
 
