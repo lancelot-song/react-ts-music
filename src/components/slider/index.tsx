@@ -50,7 +50,13 @@ const Slider: RefForwardingComponent<TSliderRef,IProps> = (props, ref) => {
             swiper && swiper.update();
         },
         go(index){
+            swiper && swiper.off('slideChange');
             swiper && swiper.slideTo(index);
+            if(onSwitchIndex && swiper){
+                swiper.on('slideChange', function(){
+                    onSwitchIndex( swiper.activeIndex );
+                });
+            }
         }
     }));
 

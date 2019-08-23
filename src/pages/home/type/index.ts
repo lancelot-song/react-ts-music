@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:09 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-23 15:06:11
+ * @Last Modified time: 2019-08-23 17:49:44
  */
 import { ReactNode } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -12,10 +12,10 @@ export type TAction = {
     type : string;
     data : object[] | boolean;
 }
-type TSliderComponents = {
+export type TSliderComponents = {
     type : string;
     Component : ReactNode;
-    loaded : boolean;
+    loaded : boolean | 'disabled';
 }
 export interface IProps extends RouteComponentProps<{navType : string}>{
     sliderConfig : SwiperOptions;
