@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-23 17:28:12
+ * @Last Modified time: 2019-08-22 10:20:09
  */
 import React, { useEffect, useRef, } from 'react';
 import { Link } from 'react-router-dom';
@@ -128,7 +128,6 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
         </div>
     )
 }
-
 const mapState = (state:any) => ({
     status : state.getIn(['common','status']),
     bannerList : state.getIn(['recommend','bannerList']).toJS(),

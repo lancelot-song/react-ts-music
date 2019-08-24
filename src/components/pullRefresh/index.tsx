@@ -54,4 +54,6 @@ PullRefrsh.defaultProps = {
     isRefreshing : false
 }
 
-export default React.memo(PullRefrsh);
+export default React.memo(PullRefrsh, (prevProps, nextProps) => {
+    return false
+});
