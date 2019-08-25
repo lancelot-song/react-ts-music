@@ -42,12 +42,11 @@ const Scroll: RefForwardingComponent<TScrollRefresh, IProps> = (props, ref) => {
         //监听BScroll事件回调
         const { onPullUp, onPullDown, onScroll } = props;
         const { direction, refresh, click, bounceTime, bounce } = props;
-
         const scroll = new BScroll(scrollContentRef.current, {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
             probeType : 2,
-            click : click,
+            click : true,
             pullDownRefresh : pullDownRefresh,
             bounce : {
                 top : typeof bounce === 'object' ? bounce.top : !!bounce,

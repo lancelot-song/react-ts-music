@@ -35,9 +35,9 @@ const Home:React.FC<IProps> = (props) => {
     //每次url改变后重新渲染数据
     copySliderComponents[initSliderIndex]['loaded'] = true;
     const renderSliderComponents = copySliderComponents.map((Item:any,index:number) => (
-            <div className='swiper-slide' key={index}>
-                { Item.loaded && <Item.Component /> }
-            </div>
+        <div className='swiper-slide' key={index}>
+            { Item.loaded && <Item.Component /> }
+        </div>
     ));
 
     //根据路由 || slider的改变 动态渲染组件

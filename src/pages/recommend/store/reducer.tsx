@@ -39,7 +39,22 @@ const defaultState = fromJS({
         icon : <IconVideo />,
         url :''
     }],
-    recommendList :[],
+    songSheet :{
+        heading : [{
+            title : '歌单推荐',
+            btn : {
+                context : '歌单广场',
+                icon : '111'
+            }
+        },{
+            title : '歌单推荐2',
+            btn : {
+                context : '歌单广场2',
+                icon : '222'
+            }
+        }],
+        items : [[]]
+    },
     enterLoading : true,
     scrollConfig : {
         direction : 'vertical',

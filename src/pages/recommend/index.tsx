@@ -4,7 +4,7 @@
  * @Last Modified by: songzhiheng
  * @Last Modified time: 2019-08-22 10:20:09
  */
-import React, { useEffect, useRef, } from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { forceCheck } from 'react-lazyload';
@@ -12,11 +12,13 @@ import BannerSlider from '../../components/slider';
 import { IRecommendProps } from './type'
 import * as recommendAction from './store/actionCreators';
 import Scroll from '../../components/scroll';
+import ColumnVertical from '../../components/columns/vertical';
+import ColumnHeading from '../../components/columns/heading';
 import { TSliderUpdate } from '../../components/slider';
 import './style.scss';
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
-    const { bannerList, bannerConfig, scrollConfig, menuList } = props;
+    const { bannerList, bannerConfig, scrollConfig, menuList, songSheet } = props;
 
     const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
@@ -25,6 +27,13 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
             props.requestBannerList();
         }
     },[]);
+
+    const [recommendColumnHeading, setRecommendColumnHeading] = useState(()=>({
+        title : '推荐歌单',
+        btn : {
+            context : '歌单广场'
+        }
+    }));
 
     useEffect(()=>{
         BannerSwipeRef.current && BannerSwipeRef.current.update();
@@ -72,6 +81,9 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
                 pullDownRefresh={scrollConfig.pullDownRefresh}>
                 <BannerList />
                 <MenuList />
+                <ColumnVertical 
+                    heading={songSheet.heading} 
+                    items={songSheet.items} />
                 <div>1111111111111</div>
                 <div>1111111111111</div>
                 <div>1111111111111</div>
@@ -133,7 +145,8 @@ const mapState = (state:any) => ({
     bannerList : state.getIn(['recommend','bannerList']).toJS(),
     menuList : state.getIn(['recommend','menuList']).toJS(),
     scrollConfig : state.getIn(['recommend','scrollConfig']).toJS(),
-    bannerConfig : state.getIn(['recommend','bannerConfig']).toJS()
+    bannerConfig : state.getIn(['recommend','bannerConfig']).toJS(),
+    songSheet : state.getIn(['recommend','songSheet']).toJS()
 });
 const mapProps = (dispatch:any) => ({
     requestBannerList : () =>{

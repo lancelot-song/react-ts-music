@@ -7,6 +7,7 @@
 import React from 'react';
 import { SwiperOptions } from 'swiper';
 import { IProps as IScrollConfig } from '../../../components/scroll';
+import { IProps as IColumnVertical } from '../../../components/columns/vertical';
 
 //加载状态
 export type TEnterLoading = boolean;
@@ -27,13 +28,12 @@ export type TBannerList = {
     targetType? : number;
     encodeId ? : string;
 }
-
 export interface IRecommendProps{
-    status : boolean;
-    bannerList : TBannerList[];
-    menuList : IMenuList[];
     scrollConfig : IScrollConfig;
+    bannerList : TBannerList[];
     bannerConfig : SwiperOptions;
+    menuList : IMenuList[];
+    songSheet:IColumnVertical;
     requestBannerList:()=>void;
     requestBannerListRefresh:(endCallback:()=>void)=>void;
 }

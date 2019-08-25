@@ -1,0 +1,54 @@
+.ui-column{
+    position: relative;
+    .ui-column-heading{
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        .title{
+            font-size:1.5rem;
+            color:#2b2b2b;
+            .siblings{
+                font-size:1.2rem;
+                color:#848484;
+            }
+        }
+        .btn{
+            padding:.6rem;
+            font-size:1rem;
+            color:#373739;
+            text-align:center;
+            border:1px solid #e9e9e9;
+            .icon{
+                display: inline-block;
+            }
+        }
+    }
+    .ui-column-vertical{
+        display: flex;
+        justify-content: space-between;
+        .item{
+            position: relative;
+            width:31%;
+            .pic-group{
+                position: relative;
+                padding-top:100%;
+                img{
+                    position: absolute;
+                    left:0px;top:0px;
+                    width:100%;
+                    height:100%;
+                    z-index:10;
+                }
+                .playCount{
+                    position: absolute;
+                    left:0px;top:0px;
+                    width:100%;
+                    height:1.5rem;
+                    z-index:15;
+                    background-color:rgba(0,0,0,.2);
+                    color:#fff
+                }
+            }
+        }
+    }
+}
