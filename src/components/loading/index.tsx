@@ -5,7 +5,7 @@
  * @Last Modified time: 2019-08-20 13:59:33
  */
 import React from 'react';
-import processStyle, { ICssPrefix } from '../../utils/processStyle';
+import getProcessStyle, { ICssPrefix } from '../../utils/processStyle';
 import './style.scss';
 
 export interface IProps {
@@ -15,7 +15,7 @@ export interface IProps {
 const Loading:React.FunctionComponent<IProps> = (props) => {
     const { scale } = props;
     const scaleStyle:ICssPrefix = {};
-    scaleStyle[processStyle('transform')] = `scale(${scale})`;
+    scaleStyle[getProcessStyle('transform')] = `scale(${scale})`;
     return (
         <div className="ui-loading" style={scaleStyle}>
           <div className="loader"></div>

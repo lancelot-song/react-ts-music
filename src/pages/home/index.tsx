@@ -17,33 +17,37 @@ import './style.scss';
 const Home:React.FC<IProps> = (props) => {
     const { sliderComponents, sliderConfig, match, history } = props;
     
-    //根据url 配置slider组件位置、内容
-    const switchRouterTypes = sliderComponents.map(item=>`${item.type}`);
+    //获得模板类型 初始化位置
+    const [ switchRouterTypes, setSwitchRouterTypes ] = useState(()=>sliderComponents.map(item=>`${item.type}`));
     const initSliderIndex = switchRouterTypes.indexOf(match.params.navType);
 
     //获得slider初始参数配置
-    const sliderConfigMerge = {
+    const [ sliderConfigMerge, setSliderConfig ] = useState(()=>({
         ...sliderConfig,
         initialSlide : initSliderIndex
-    }
+    }));
 
-    //借用useState存储状态的特性 每次切换路由 都通过修改useState的数组 实现前一次修改的状态不丢失
-    const [ saveSliderComponent, setSaveSliderComponent ] = useState(sliderComponents);
-    const renderSlider = saveSliderComponent.map((item:any,index:number) => {
-        if(index === initSliderIndex){
-            item.loaded = true;
-        }
-        return item;
-    });
+    //获得一个新的sliderComponents对象，此后渲染修改copy后的对象，避免直接修改props
+    const [ copySliderComponents, setSaveSliderComponents ] = useState(()=>(
+        sliderComponents.map(item => Object.assign({}, item))
+    ));
 
-    //根据路由变化控制slider加载的组件
+    //每次url改变后重新渲染数据
+    copySliderComponents[initSliderIndex]['loaded'] = true;
+    const renderSliderComponents = copySliderComponents.map((Item:any,index:number) => (
+            <div className='swiper-slide' key={index}>
+                { Item.loaded && <Item.Component /> }
+            </div>
+    ));
+
+    //根据路由 || slider的改变 动态渲染组件
     const SliderRef = useRef<TSliderGo>(null);
     const onSwitchRouter = (swipeIndex:number) =>{
         history.replace( `${routerPath.home.default}/${switchRouterTypes[swipeIndex]}` );
     }
     useEffect(()=>{
         SliderRef.current && SliderRef.current.go( switchRouterTypes.indexOf(match.params.navType) );
-    },[match.params.navType]);
+    });
     return (
         <div className='ui-app'>
             <div className='ui-hd'>
@@ -61,17 +65,7 @@ const Home:React.FC<IProps> = (props) => {
                 classNames='ui-home-swipe'
                 config={sliderConfigMerge}
                 onSwitchIndex={onSwitchRouter}> 
-                <div className='swiper-wrapper'>
-                { 
-                    renderSlider.map((Item:any,index:number) => {
-                        return (
-                            <div className='swiper-slide' key={index}>
-                                { Item.loaded && <Item.Component /> }
-                            </div>
-                        )
-                    })
-                 }
-                 </div>
+                <div className='swiper-wrapper'>{ renderSliderComponents }</div>
             </HomeSwipe>
             {props.children}
         </div>
@@ -82,9 +76,7 @@ const mapState = (state:any) => ({
     sliderConfig : state.getIn(['home','sliderConfig']).toJS(),
     sliderComponents : state.getIn(['home','sliderComponents']).toJS()
 });
-export default withRouter(connect(mapState)(React.memo(Home, (prevProps, nextProps) => {
-    if(prevProps.match.params.navType !== nextProps.match.params.navType){
-        return false;
-    }
-    return true;
+export default withRouter(connect(mapState)(React.memo(Home,(prevProps, nextProps)=>{
+    //只允许url改变重新渲染
+    return prevProps.match.params.navType!==nextProps.match.params.navType ? false : true;
 })));

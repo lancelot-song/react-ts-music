@@ -5,7 +5,7 @@
  * @Last Modified time: 2019-08-20 14:48:54
  */
 import React, { useState, useEffect } from 'react';
-import processStyle, { ICssPrefix } from '../../utils/processStyle';
+import getProcessStyle, { ICssPrefix } from '../../utils/processStyle';
 import { ReactComponent as IconRefresh } from '../../assets/images/icon-refresh.svg';
 import './style.scss';
 
@@ -21,7 +21,7 @@ const PullRefrsh: React.FunctionComponent<IProps> = (props) => {
     const { threshold, rotate, offset, isRefreshing } = props;
 
     let transformStyle:ICssPrefix = {};
-    let transformPrefix = processStyle('transform');
+    let transformPrefix = getProcessStyle('transform');
     transformStyle[transformPrefix] = 'rotate(0deg)';
 
     const [ rotateStyle, setRotateStyle ] = useState(transformStyle);
@@ -54,6 +54,4 @@ PullRefrsh.defaultProps = {
     isRefreshing : false
 }
 
-export default React.memo(PullRefrsh, (prevProps, nextProps) => {
-    return false
-});
+export default React.memo(PullRefrsh);

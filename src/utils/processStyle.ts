@@ -7,25 +7,36 @@
 export interface ICssPrefix {
     [ propName:string] : string;
 }
-const cssPrefix = (() => {
-    const elementStyle:any = document.createElement('div').style;
-    const transformNames:ICssPrefix = {
-        Webkit: 'webkitTransform',
-        Moz: 'MozTransform',
-        O: 'OTransfrom',
-        ms: 'msTransform',
-        standard: 'Transform'
-    };
-    const key = Object.keys(transformNames).find((key)=>{
-        if(elementStyle[ transformNames[key] ] !== undefined) {
-            return key;
-        }
-    });
-    return key ? key : '';
-})();
-const processStyle = (style:string) =>{
-    return cssPrefix === 'standard' ? 
+
+class ProcessStyle{
+    cssPrefix = '';
+    constructor(){
+        this.setCssPrefix();
+    }
+    setCssPrefix (){
+        const elementStyle:any = document.createElement('div').style;
+        const transformNames:ICssPrefix = {
+            Webkit: 'webkitTransform',
+            Moz: 'MozTransform',
+            O: 'OTransfrom',
+            ms: 'msTransform',
+            standard: 'Transform'
+        };
+        const key = Object.keys(transformNames).find((key)=>{
+            if(elementStyle[ transformNames[key] ] !== undefined) {
+                return key;
+            }
+        });
+        this.cssPrefix = key ? key : '';
+    }
+    getCssPrefix(style:string){
+        return this.cssPrefix === 'standard' ? 
         style 
-        : cssPrefix + style.charAt(0).toUpperCase() + style.substr(1);
+        : this.cssPrefix + style.charAt(0).toUpperCase() + style.substr(1);
+    }
 }
-export default processStyle;
+const getProcessStyle = (() =>{
+    const initObj = new ProcessStyle();
+    return (style:string) => initObj.getCssPrefix(style);
+})();
+export default getProcessStyle;
