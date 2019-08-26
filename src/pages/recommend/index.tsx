@@ -4,7 +4,7 @@
  * @Last Modified by: songzhiheng
  * @Last Modified time: 2019-08-26 16:01:54
  */
-import React, { useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { forceCheck } from 'react-lazyload';
@@ -18,12 +18,12 @@ import './style.scss';
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const { bannerList, bannerConfig, scrollConfig, menuList, songSheet } = props;
-
+    const { requestBannerList } = props;
     const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
     useEffect(()=>{
         if( !bannerList.length ){
-            props.requestBannerList();
+            requestBannerList();
         }
     },[]);
 
@@ -70,6 +70,7 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
                 onScroll={()=>forceCheck()}
                 onPullRefresh={props.requestBannerListRefresh}
                 bounce={scrollConfig.bounce}
+                click={true}
                 pullDownRefresh={scrollConfig.pullDownRefresh}>
                 <BannerList />
                 <MenuList />

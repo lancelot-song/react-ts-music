@@ -4,7 +4,7 @@
  * @Last Modified by: songzhiheng
  * @Last Modified time: 2019-08-23 17:49:45
  */
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import HomeSwipe from '../../components/slider';
@@ -18,27 +18,24 @@ const Home:React.FC<IProps> = (props) => {
     const { sliderComponents, sliderConfig, match, history } = props;
     
     //获得模板类型 初始化位置
-    const [ switchRouterTypes, setSwitchRouterTypes ] = useState(()=>sliderComponents.map(item=>`${item.type}`));
+    const [ switchRouterTypes ] = useState(()=>sliderComponents.map(item=>`${item.type}`));
     const initSliderIndex = switchRouterTypes.indexOf(match.params.navType);
 
     //获得slider初始参数配置
-    const [ sliderConfigMerge, setSliderConfig ] = useState(()=>({
+    const [ sliderConfigMerge ] = useState(()=>({
         ...sliderConfig,
         initialSlide : initSliderIndex
     }));
 
-    //获得一个新的sliderComponents对象，此后渲染修改copy后的对象，避免直接修改props
-    const [ copySliderComponents, setSaveSliderComponents ] = useState(()=>(
-        sliderComponents.map(item => Object.assign({}, item))
-    ));
-
     //每次url改变后重新渲染数据
-    copySliderComponents[initSliderIndex]['loaded'] = true;
-    const renderSliderComponents = copySliderComponents.map((Item:any,index:number) => (
-        <div className='swiper-slide' key={index}>
-            { Item.loaded && <Item.Component /> }
-        </div>
-    ));
+    const renderSliderComponents = useMemo(()=>{
+        sliderComponents[initSliderIndex]['loaded'] = true;
+        return sliderComponents.map((Item:any,index:number)=>(
+            <div className='swiper-slide' key={index}>
+                { Item.loaded && <Item.Component /> }
+            </div>
+        ))
+    },[initSliderIndex, sliderComponents]);
 
     //根据路由 || slider的改变 动态渲染组件
     const SliderRef = useRef<TSliderGo>(null);
@@ -46,6 +43,7 @@ const Home:React.FC<IProps> = (props) => {
         history.replace( `${routerPath.home.default}/${switchRouterTypes[swipeIndex]}` );
     }
     useEffect(()=>{
+        
         SliderRef.current && SliderRef.current.go( switchRouterTypes.indexOf(match.params.navType) );
     });
     return (
@@ -76,7 +74,4 @@ const mapState = (state:any) => ({
     sliderConfig : state.getIn(['home','sliderConfig']).toJS(),
     sliderComponents : state.getIn(['home','sliderComponents']).toJS()
 });
-export default withRouter(connect(mapState)(React.memo(Home,(prevProps, nextProps)=>{
-    //只允许url改变重新渲染
-    return prevProps.match.params.navType!==nextProps.match.params.navType ? false : true;
-})));
+export default withRouter(connect(mapState)(React.memo(Home)));

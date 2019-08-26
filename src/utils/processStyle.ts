@@ -26,6 +26,7 @@ class ProcessStyle{
             if(elementStyle[ transformNames[key] ] !== undefined) {
                 return key;
             }
+            return '';
         });
         this.cssPrefix = key ? key : '';
     }

@@ -7,7 +7,7 @@
 import { fromJS } from 'immutable';
 import { Dispatch } from 'redux';
 import * as constants from './constants';
-import { getBannerList, getRecommendList } from '../../../api/request';
+import { getBannerList } from '../../../api/request';
 import * as types from '../type';
 
 export const changeBannerList = (data:types.TBannerList[]) => ({

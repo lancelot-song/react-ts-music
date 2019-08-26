@@ -36,7 +36,7 @@ const PullRefrsh: React.FunctionComponent<IProps> = (props) => {
         _transformPrefix[transformPrefix] = `rotate(${rotateNum}deg)`;
         setRotateStyle(_transformPrefix);
         setOpacityStyle({ 'opacity' : rotateOpacity });
-    },[offset]);
+    },[offset, rotate, threshold, transformPrefix]);
 
     return (
         <div className='ui-pull-refresh'>

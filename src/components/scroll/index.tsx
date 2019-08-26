@@ -46,7 +46,7 @@ const Scroll: RefForwardingComponent<TScrollRefresh, IProps> = (props, ref) => {
             scrollX : direction === 'horizental',
             scrollY : direction === 'vertical',
             probeType : 2,
-            click : true,
+            click : click,
             pullDownRefresh : pullDownRefresh,
             bounce : {
                 top : typeof bounce === 'object' ? bounce.top : !!bounce,

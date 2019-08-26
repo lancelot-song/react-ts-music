@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import Loadable from 'react-loadable';
 import Loading from '../../../components/loading';
 import { TAction } from '../type';
-import * as constants from './constants';
+//import * as constants from './constants';
 
 const LoadableMe = Loadable({
     loader : () => import('../../../pages/recommend'),
