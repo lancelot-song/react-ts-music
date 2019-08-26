@@ -16,9 +16,9 @@ export type TSliderUpdate = {
 export type TSliderGo = {
     go: (index:number)=>void
 }
-export type TSliderRef = Partial<TSliderUpdate> & Partial<TSliderGo>;
+export type TSliderRef = Partial<TSliderUpdate | TSliderGo>;
 
-const Slider: RefForwardingComponent<TSliderRef,IProps> = (props, ref) => {
+const Slider: RefForwardingComponent<TSliderRef, IProps> = (props, ref) => {
 
     const swiperRef = useRef<HTMLDivElement>(null);
 

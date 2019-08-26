@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-22 10:20:09
+ * @Last Modified time: 2019-08-26 16:01:54
  */
 import React, { useEffect, useRef, useState} from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,6 @@ import { IRecommendProps } from './type'
 import * as recommendAction from './store/actionCreators';
 import Scroll from '../../components/scroll';
 import ColumnVertical from '../../components/columns/vertical';
-import ColumnHeading from '../../components/columns/heading';
 import { TSliderUpdate } from '../../components/slider';
 import './style.scss';
 
@@ -27,13 +26,6 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
             props.requestBannerList();
         }
     },[]);
-
-    const [recommendColumnHeading, setRecommendColumnHeading] = useState(()=>({
-        title : '推荐歌单',
-        btn : {
-            context : '歌单广场'
-        }
-    }));
 
     useEffect(()=>{
         BannerSwipeRef.current && BannerSwipeRef.current.update();

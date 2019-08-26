@@ -41,16 +41,14 @@ const defaultState = fromJS({
     }],
     songSheet :{
         heading : [{
-            title : '歌单推荐',
+            title : '新碟',
             btn : {
-                context : '歌单广场',
-                icon : '111'
+                context : '更多新碟'
             }
         },{
-            title : '歌单推荐2',
+            title : '新歌',
             btn : {
-                context : '歌单广场2',
-                icon : '222'
+                context : '新歌推荐'
             }
         }],
         items : [[]]

@@ -15,35 +15,34 @@ export interface IProps{
 }
 
 const Heading: FC<IProps> = (props) => {
-
     const { params, activeIndex } = props;
     const { onSwitchActive } = props;
     return (
-        <div>
+        <div className='ui-column-heading'>
+        <h3 className='title-group'>
+            {
+                params.map((item, index)=>{
+                    const isActive = activeIndex === index ? 'active' : '';
+                    const paramsLen = params.length;
+                    const isLine = paramsLen > 1 && index + 1 < paramsLen ? 'show-line' : '';
+                    return (
+                        <span 
+                            className={`title ${isActive} ${isLine}`} 
+                            key={item.title}
+                            onClick={()=>{ onSwitchActive(index) }}>
+                            { item.title }
+                        </span>
+                    )
+                })
+            }
+        </h3>
         {
-            params.map((item, index)=>{
-                const isActive = activeIndex === index ? 'active' : '';
-                return (
-                    <div className='ui-column-heading' key={item.title}>
-                        <h3 className='title' key={item.title}>
-                            <span className={'title '+ isActive} onClick={()=>{
-                                console.log(index)
-                                    onSwitchActive(index);
-                                }}>
-                                { item.title }
-                            </span>
-                        </h3>
-                        {
-                            isActive ? (
-                                <span className='btn' onClick={item.btn.handle} >
-                                    { item.btn.icon && <i className='icon'>{ item.btn.icon }</i> }
-                                    { item.btn.context }
-                                </span> 
-                            ) : null
-                        }
-                    </div>
-                )
-            })
+            <span 
+                className='btn' 
+                onClick={params[activeIndex].btn.handle} >
+                { params[activeIndex].btn.icon && <i className='icon'>{ params[activeIndex].btn.icon }</i> }
+                { params[activeIndex].btn.context }
+            </span> 
         }
         </div>
     )

@@ -1,23 +1,66 @@
 .ui-column{
     position: relative;
     .ui-column-heading{
+        margin:.8rem auto;
         position: relative;
         display: flex;
         justify-content: space-between;
+        align-items:center;
+        .title-group{
+            position:relative;
+            display: flex;
+        }
         .title{
-            font-size:1.5rem;
-            color:#2b2b2b;
-            .siblings{
-                font-size:1.2rem;
-                color:#848484;
+            display: block;
+            position:relative;
+            font-size:.6rem;
+            color:#848484;
+            font-weight:500;
+            height:1rem;
+            line-height:1rem;
+            min-width:2.5rem;
+            text-align: left;
+            &.active{
+                font-size:.75rem;
+                line-height:1rem;
+                color:#2b2b2b;
+                font-weight: 800;
+            }
+            &.show-line{
+                padding-right:1rem;
+                &::after{
+                    content:"";
+                    position: absolute;
+                    display: block;
+                    top:.2rem;
+                    right:.5rem;
+                    width:1px;
+                    height:.6rem;
+                    background-color:#848484;
+                    transform: scale(0.5, 1);
+                }
             }
         }
         .btn{
-            padding:.6rem;
-            font-size:1rem;
+            position: relative;
+            padding:0rem .5rem;
+            font-size:.5rem;
             color:#373739;
+            height:1.2rem;
+            line-height: 1.2rem;
             text-align:center;
-            border:1px solid #e9e9e9;
+            &::after{
+                content: '';
+                width: 200%;
+                height: 200%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border: 1px solid #e9e9e9;
+                border-radius: 1.2rem;
+                transform: scale(0.5,0.5);
+                transform-origin: top left;
+            }
             .icon{
                 display: inline-block;
             }
@@ -43,7 +86,7 @@
                     position: absolute;
                     left:0px;top:0px;
                     width:100%;
-                    height:1.5rem;
+                    height:.75rem;
                     z-index:15;
                     background-color:rgba(0,0,0,.2);
                     color:#fff

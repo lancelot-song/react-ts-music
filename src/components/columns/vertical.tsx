@@ -24,15 +24,12 @@ const ColumnVertical: FC<IProps> = (props) => {
     const { items, heading } = props;
 
     const [ activeHeadingIndex, setActiveHeadingIndex ] = useSwitchActiveHeading(0);
-    console.log(activeHeadingIndex);
     const headingComponent = heading ? (
         <Heading 
             params={heading} 
             activeIndex={activeHeadingIndex as number}
             onSwitchActive={setActiveHeadingIndex} />
     ) : '';
-    console.log(items[activeHeadingIndex as number]);
-    console.log(items)
     const itemsComponet = '1'
     // const itemsComponet = items[activeHeadingIndex as number].map(item=>{
     //     return (
@@ -47,7 +44,7 @@ const ColumnVertical: FC<IProps> = (props) => {
     //     )
     // })
     return (
-        <div className='ui-column'>
+        <div className='ui-layout ui-column'>
             { headingComponent }
             <div className='ui-column-vertical'>{ itemsComponet }</div>
         </div>
