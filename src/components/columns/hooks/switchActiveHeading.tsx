@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 const useSwitchActiveHeading =  (index:number)=>{
-    const [ activeIndex, setActiveIndex ] = useState(index);
-    return [
-        activeIndex,
-        setActiveIndex
-    ]
+    const [ switchActiveIndex, setSwitchActiveIndex ] = useState(index);
+    return {
+        switchActiveIndex,
+        setSwitchActiveIndex
+    }
 }
 export default useSwitchActiveHeading;

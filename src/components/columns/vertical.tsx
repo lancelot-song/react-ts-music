@@ -23,15 +23,15 @@ export interface IProps{
 const ColumnVertical: FC<IProps> = (props) => {
     const { items, heading } = props;
 
-    const [ activeHeadingIndex, setActiveHeadingIndex ] = useSwitchActiveHeading(0);
+    const { switchActiveIndex, setSwitchActiveIndex } = useSwitchActiveHeading(0);
     const headingComponent = heading ? (
         <Heading 
             params={heading} 
-            activeIndex={activeHeadingIndex as number}
-            onSwitchActive={setActiveHeadingIndex} />
+            activeIndex={switchActiveIndex}
+            onSwitchActive={setSwitchActiveIndex} />
     ) : '';
     const itemsComponet = '1'
-    // const itemsComponet = items[activeHeadingIndex as number].map(item=>{
+    // const itemsComponet = items[activeHeadingIndex].map(item=>{
     //     return (
     //         <div className='item' key={item.picUrl}>
     //             <div className='pic-group'>

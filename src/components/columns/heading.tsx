@@ -1,17 +1,17 @@
-import React, {  ReactNode, FC } from 'react';
+import React, { ReactNode, FC, MouseEvent } from 'react';
 import './style.scss';
 export type TParams = {
     title : string;
     btn : {
         context : string;
         icon? : ReactNode;
-        handle? : any
+        handle? : (event: MouseEvent<HTMLSpanElement>)=>void;
     }
 }
 export interface IProps{
     params : TParams[],
     activeIndex : number;
-    onSwitchActive? : any
+    onSwitchActive?:any
 }
 
 const Heading: FC<IProps> = (props) => {
@@ -29,7 +29,7 @@ const Heading: FC<IProps> = (props) => {
                         <span 
                             className={`title ${isActive} ${isLine}`} 
                             key={item.title}
-                            onClick={()=>{ onSwitchActive(index) }}>
+                            onClick={()=>{ onSwitchActive && onSwitchActive(index) }}>
                             { item.title }
                         </span>
                     )
