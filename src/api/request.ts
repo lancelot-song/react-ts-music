@@ -7,3 +7,6 @@ export const getBannerList = ():AxiosPromise =>{
 export const getRecommendList = ():AxiosPromise =>{
     return axiosIntance.get('/personalized?limit=6');
 }
+export const getRecommendMusicSquare = ():AxiosPromise =>{
+    return axiosIntance.get('/personalized?limit=9');
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 import * as constants from './constants';
+import routerPath from '../../../api/routerPath';
 
 import { ReactComponent as IconData }  from '../../../assets/images/icon-date.svg';
 import { ReactComponent as IconMusic }  from '../../../assets/images/icon-music.svg';
@@ -39,19 +40,31 @@ const defaultState = fromJS({
         icon : <IconVideo />,
         url :''
     }],
-    songSheet :{
+    musicSquare :{
+        heading : [{
+            title : '推荐歌单',
+            btn : {
+                context : '歌单广场',
+                url : routerPath.home.musicSquare
+            }
+        }],
+        items : []
+    },
+    musicSheet :{
         heading : [{
             title : '新碟',
             btn : {
-                context : '更多新碟'
+                context : '更多新碟',
+                url : routerPath.home.musicSaucer
             }
         },{
             title : '新歌',
             btn : {
-                context : '新歌推荐'
+                context : '新歌推荐',
+                url : routerPath.home.musicSingles
             }
         }],
-        items : {}
+        items : []
     },
     enterLoading : true,
     scrollConfig : {
@@ -75,8 +88,8 @@ export default (state = defaultState, action:TAction) => {
     switch(action.type){
         case constants.CHANGE_BANNER_LIST:
             return state.set("bannerList", action.data);
-        case constants.CHANGE_RECOMMEND_LIST:
-            return state.set('recommendList', action.data);
+        case constants.CHANGE_MUSIC_SQUARE:
+            return state.setIn(['musicSquare','items',0], action.data);
         case constants.CHANGE_ENTER_LOADING:
             return state.set('enterLoading', action.data);
         default:;

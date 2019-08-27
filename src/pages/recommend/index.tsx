@@ -2,9 +2,9 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-26 16:01:54
+ * @Last Modified time: 2019-08-27 17:02:42
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { forceCheck } from 'react-lazyload';
@@ -17,13 +17,16 @@ import { TSliderUpdate } from '../../components/slider';
 import './style.scss';
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
-    const { bannerList, bannerConfig, scrollConfig, menuList, songSheet } = props;
-    const { requestBannerList } = props;
+    const { bannerList, bannerConfig, scrollConfig, menuList, musicSquare } = props;
+    const { requestBannerList, requestMusicSquare } = props;
     const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
     useEffect(()=>{
         if( !bannerList.length ){
             requestBannerList();
+        }
+        if( !musicSquare.items.length ){
+            requestMusicSquare();
         }
     },[]);
 
@@ -31,23 +34,22 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
         BannerSwipeRef.current && BannerSwipeRef.current.update();
     }, [bannerList]);
 
-    const MenuList = () =>{
-        return (
-            <div className='ui-menu-list'>
-                {
-                    menuList.map(item=>{
-                        return (<Link to={item.url} key={item.title+item.url} className='item'>
-                            <div className='icon-group'>
-                                <div className='icon-label'>{item.icon}</div>
-                            </div>
-                            <div className='title'>{ item.title }</div>
-                        </Link>)
-                    })
-                }
-            </div>
-        )
-    }
-    const BannerList = () =>(
+    const MenuList = useMemo(() => (
+        <div className='ui-menu-list'>
+            {
+                menuList.map(item=>{
+                    return (<Link to={item.url} key={item.title+item.url} className='item'>
+                        <div className='icon-group'>
+                            <div className='icon-label'>{item.icon}</div>
+                        </div>
+                        <div className='title'>{ item.title }</div>
+                    </Link>)
+                })
+            }
+        </div>
+    ), [menuList]);
+
+    const BannerList = useMemo(() => (
         <BannerSlider config={ bannerConfig } ref={BannerSwipeRef}>
             <div className='swiper-wrapper'>
             {
@@ -62,7 +64,7 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
             }
             </div>
         </BannerSlider>
-    )
+    ), [bannerList]);
     return (
         <div className='ui-content'>
             <Scroll 
@@ -72,11 +74,11 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
                 bounce={scrollConfig.bounce}
                 click={true}
                 pullDownRefresh={scrollConfig.pullDownRefresh}>
-                <BannerList />
-                <MenuList />
+                { BannerList }
+                { MenuList }
                 <ColumnVertical 
-                    heading={songSheet.heading} 
-                    items={songSheet.items} />
+                    heading={musicSquare.heading} 
+                    items={musicSquare.items} />
                 <div>1111111111111</div>
                 <div>1111111111111</div>
                 <div>1111111111111</div>
@@ -139,11 +141,14 @@ const mapState = (state:any) => ({
     menuList : state.getIn(['recommend','menuList']).toJS(),
     scrollConfig : state.getIn(['recommend','scrollConfig']).toJS(),
     bannerConfig : state.getIn(['recommend','bannerConfig']).toJS(),
-    songSheet : state.getIn(['recommend','songSheet']).toJS()
+    musicSquare : state.getIn(['recommend','musicSquare']).toJS()
 });
 const mapProps = (dispatch:any) => ({
     requestBannerList : () =>{
         dispatch( recommendAction.requestBannerList() );
+    },
+    requestMusicSquare : () =>{
+        dispatch( recommendAction.requestMusicSquare() );
     },
     requestBannerListRefresh : async(refreshCallback:any) =>{
         //伪造 请求数据延迟2秒 看看刷新效果如何

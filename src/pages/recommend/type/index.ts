@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:14 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-26 17:06:54
+ * @Last Modified time: 2019-08-27 16:54:26
  */
 import React from 'react';
 import { SwiperOptions } from 'swiper';
@@ -30,7 +30,8 @@ export interface IRecommendProps{
     bannerConfig : SwiperOptions;
     bannerList : TBannerList[];
     menuList : IMenuList[];
-    songSheet:IColumnVertical;
+    musicSquare:IColumnVertical;
     requestBannerList:()=>void;
     requestBannerListRefresh:(endCallback:()=>void)=>void;
+    requestMusicSquare:()=>void;
 }
