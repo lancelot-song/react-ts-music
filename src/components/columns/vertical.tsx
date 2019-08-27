@@ -1,4 +1,5 @@
-import React, { useState, useEffect, FC, ReactNode } from 'react';
+import React, { useState, useMemo, FC, ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import Heading, { TParams as IHeading } from './heading';
 import useSwitchActiveHeading from './hooks/switchActiveHeading';
 import './style.scss';
@@ -22,27 +23,29 @@ export interface IProps{
 
 const ColumnVertical: FC<IProps> = (props) => {
     const { items, heading } = props;
-
     const { switchActiveIndex, setSwitchActiveIndex } = useSwitchActiveHeading(0);
-    const headingComponent = heading ? (
+    
+    const [ headingComponent ] = useState(()=>(
         <Heading 
             params={heading} 
             activeIndex={switchActiveIndex}
             onSwitchActive={setSwitchActiveIndex} />
-    ) : '';
-    const itemsComponet = '1'
-    // const itemsComponet = items[activeHeadingIndex].map(item=>{
-    //     return (
-    //         <div className='item' key={item.picUrl}>
-    //             <div className='pic-group'>
-    //                 <img src={item.picUrl} className='pic' />
-    //                 { item.intro && <div className='intro'>{item.intro}</div> }
-    //                 { item.playCount && <div className='play-count'>{item.playCount}</div> }
-    //                 { item.label && <div className='label' style={{'backgroundColor':item.label}}>{item.label}</div> }
-    //             </div>
-    //         </div>
-    //     )
-    // })
+    ));
+
+    const itemsComponet = useMemo(()=>{
+        return items.length ? items[switchActiveIndex].map(item=>(
+                <Link to={'/'} className='item' key={item.picUrl}>
+                    <div className='pic-group'>
+                        <img src={item.picUrl} className='pic' />
+                        { item.intro && <div className='intro'>{item.intro}</div> }
+                        { item.playCount && <div className='play-count'>{item.playCount}</div> }
+                        { item.label && <div className='label' style={{'backgroundColor':item.label}}>{item.label}</div> }
+                    </div>
+                    <div className='text'>{item.name}</div>
+                </Link>
+        )) : null;
+    },[items.length]);
+
     return (
         <div className='ui-layout ui-column'>
             { headingComponent }
