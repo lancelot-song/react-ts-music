@@ -90,6 +90,8 @@ export default (state = defaultState, action:TAction) => {
             return state.set("bannerList", action.data);
         case constants.CHANGE_MUSIC_SQUARE:
             return state.setIn(['musicSquare','items',0], action.data);
+        case constants.CHANGE_MUSIC_SHEET:
+            return state.setIn(['musicSheet','items'], action.data);
         case constants.CHANGE_ENTER_LOADING:
             return state.set('enterLoading', action.data);
         default:;

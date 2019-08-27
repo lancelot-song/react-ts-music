@@ -17,8 +17,8 @@ import { TSliderUpdate } from '../../components/slider';
 import './style.scss';
 
 const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
-    const { bannerList, bannerConfig, scrollConfig, menuList, musicSquare } = props;
-    const { requestBannerList, requestMusicSquare } = props;
+    const { bannerList, bannerConfig, scrollConfig, menuList, musicSquare, musicSheet } = props;
+    const { requestBannerList, requestMusicSquare, requestMusicSheet } = props;
     const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
     useEffect(()=>{
@@ -27,6 +27,9 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
         }
         if( !musicSquare.items.length ){
             requestMusicSquare();
+        }
+        if( !musicSheet.items.length ){
+            requestMusicSheet()
         }
     },[]);
 
@@ -65,6 +68,18 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
             </div>
         </BannerSlider>
     ), [bannerList]);
+
+    const MusicSquare = useMemo(() => (
+        <ColumnVertical 
+            heading={musicSquare.heading} 
+            items={musicSquare.items} />
+    ), [musicSquare.items.length])
+
+    const MusicSheet = useMemo(() => (
+        <ColumnVertical 
+            heading={musicSheet.heading} 
+            items={musicSheet.items} />
+    ), [musicSheet.items.length])
     return (
         <div className='ui-content'>
             <Scroll 
@@ -76,61 +91,8 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
                 pullDownRefresh={scrollConfig.pullDownRefresh}>
                 { BannerList }
                 { MenuList }
-                <ColumnVertical 
-                    heading={musicSquare.heading} 
-                    items={musicSquare.items} />
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
-                <div>1111111111111</div>
+                { MusicSquare }
+                { MusicSheet }
             </Scroll>
         </div>
     )
@@ -141,7 +103,8 @@ const mapState = (state:any) => ({
     menuList : state.getIn(['recommend','menuList']).toJS(),
     scrollConfig : state.getIn(['recommend','scrollConfig']).toJS(),
     bannerConfig : state.getIn(['recommend','bannerConfig']).toJS(),
-    musicSquare : state.getIn(['recommend','musicSquare']).toJS()
+    musicSquare : state.getIn(['recommend','musicSquare']).toJS(),
+    musicSheet : state.getIn(['recommend','musicSheet']).toJS()
 });
 const mapProps = (dispatch:any) => ({
     requestBannerList : () =>{
@@ -149,6 +112,9 @@ const mapProps = (dispatch:any) => ({
     },
     requestMusicSquare : () =>{
         dispatch( recommendAction.requestMusicSquare() );
+    },
+    requestMusicSheet : () =>{
+        dispatch( recommendAction.requestMusicSheet() );
     },
     requestBannerListRefresh : async(refreshCallback:any) =>{
         //伪造 请求数据延迟2秒 看看刷新效果如何

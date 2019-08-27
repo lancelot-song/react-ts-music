@@ -25,13 +25,7 @@ const ColumnVertical: FC<IProps> = (props) => {
     const { items, heading } = props;
     const { switchActiveIndex, setSwitchActiveIndex } = useSwitchActiveHeading(0);
     
-    const [ headingComponent ] = useState(()=>(
-        <Heading 
-            params={heading} 
-            activeIndex={switchActiveIndex}
-            onSwitchActive={setSwitchActiveIndex} />
-    ));
-
+    
     const itemsComponet = useMemo(()=>{
         return items.length ? items[switchActiveIndex].map(item=>(
                 <Link to={'/'} className='item' key={item.picUrl}>
@@ -44,11 +38,14 @@ const ColumnVertical: FC<IProps> = (props) => {
                     <div className='text'>{item.name}</div>
                 </Link>
         )) : null;
-    },[items.length]);
+    },[items.length, switchActiveIndex]);
 
     return (
         <div className='ui-layout ui-column'>
-            { headingComponent }
+            <Heading 
+                params={heading} 
+                activeIndex={switchActiveIndex}
+                onSwitchActive={setSwitchActiveIndex} />
             <div className='ui-column-vertical'>{ itemsComponet }</div>
         </div>
     )

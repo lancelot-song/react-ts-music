@@ -6,9 +6,11 @@
  */
 import { fromJS } from 'immutable';
 import { Dispatch } from 'redux';
+import axios from 'axios';
 import * as constants from './constants';
-import { getBannerList, getRecommendMusicSquare } from '../../../api/request';
+import { getBannerList, getRecommendMusicSquare, getRecommendMusicSheet } from '../../../api/request';
 import * as types from '../type';
+import { IProps as IColumnVertical } from '../../../components/columns/vertical';
 
 export const changeBannerList = (data:types.TBannerList[]) => ({
     type : constants.CHANGE_BANNER_LIST,
@@ -24,7 +26,7 @@ export const requestBannerList = () => {
     }
 }
 
-export const changeMusicSquare = (data:types.TBannerList[]) => ({
+export const changeMusicSquare = (data:IColumnVertical[]) => ({
     type : constants.CHANGE_MUSIC_SQUARE,
     data : fromJS(data)
 });
@@ -32,8 +34,24 @@ export const requestMusicSquare = () => {
     return (dispatch:Dispatch) => {
         getRecommendMusicSquare().then((data:any) => {
            dispatch(changeMusicSquare(data.result));
-       }).catch((err)=>{
+       }).catch(()=>{
            console.log('request musicSquare list error');
        });
+    }
+}
+
+export const changeMusicSheet = (data:IColumnVertical[][]) => ({
+    type : constants.CHANGE_MUSIC_SHEET,
+    data : fromJS(data)
+});
+export const requestMusicSheet = () => {
+    return (dispatch:Dispatch) => {
+        axios.all(getRecommendMusicSheet()).then(
+            axios.spread((musicSheetSaucer:any, musicSheetSingles:any) => {
+                dispatch(changeMusicSheet( [musicSheetSaucer.albums, musicSheetSingles.albums] ));
+            })
+        ).catch(()=>{
+            console.log('request musicSquare list error');
+        });
     }
 }

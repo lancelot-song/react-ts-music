@@ -31,7 +31,9 @@ export interface IRecommendProps{
     bannerList : TBannerList[];
     menuList : IMenuList[];
     musicSquare:IColumnVertical;
+    musicSheet:IColumnVertical;
     requestBannerList:()=>void;
     requestBannerListRefresh:(endCallback:()=>void)=>void;
     requestMusicSquare:()=>void;
+    requestMusicSheet:()=>void;
 }
