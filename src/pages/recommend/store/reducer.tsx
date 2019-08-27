@@ -51,7 +51,7 @@ const defaultState = fromJS({
                 context : '新歌推荐'
             }
         }],
-        items : [[]]
+        items : {}
     },
     enterLoading : true,
     scrollConfig : {
