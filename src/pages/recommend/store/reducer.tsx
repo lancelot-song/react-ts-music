@@ -48,7 +48,7 @@ const defaultState = fromJS({
                 url : routerPath.home.musicSquare
             }
         }],
-        items : []
+        items : [[{},{},{},{},{},{},{},{},{}]]
     },
     musicSheet :{
         heading : [{
@@ -64,7 +64,7 @@ const defaultState = fromJS({
                 url : routerPath.home.musicSingles
             }
         }],
-        items : []
+        items : [[{},{},{}]]
     },
     enterLoading : true,
     scrollConfig : {

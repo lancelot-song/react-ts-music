@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-27 17:02:42
+ * @Last Modified time: 2019-08-28 17:35:03
  */
 import React, { useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -22,15 +22,9 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
     useEffect(()=>{
-        if( !bannerList.length ){
-            requestBannerList();
-        }
-        if( !musicSquare.items.length ){
-            requestMusicSquare();
-        }
-        if( !musicSheet.items.length ){
-            requestMusicSheet()
-        }
+        requestBannerList();
+        requestMusicSquare();
+        requestMusicSheet()
     },[]);
 
     useEffect(()=>{
@@ -73,13 +67,14 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
         <ColumnVertical 
             heading={musicSquare.heading} 
             items={musicSquare.items} />
-    ), [musicSquare.items.length])
+    ), [musicSquare.items])
 
     const MusicSheet = useMemo(() => (
         <ColumnVertical 
             heading={musicSheet.heading} 
             items={musicSheet.items} />
-    ), [musicSheet.items.length])
+    ), [musicSheet.items])
+
     return (
         <div className='ui-content'>
             <Scroll 
