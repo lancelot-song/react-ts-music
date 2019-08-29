@@ -1,0 +1,23 @@
+.ui-notice{
+    position: fixed;
+    top:0px;
+    left:0px;right:0px;
+    margin:0px auto;
+    height:1.2rem;
+    transition:transform .5s ease;
+    z-index: 490;
+    text-align: center;
+    span{
+        padding:0rem .4rem;
+        display: inline-block;
+        border-radius: 1.2rem;
+        background-color:rgba(0,0,0,.5);
+        color:#fff;
+        line-height: 1.2rem;
+        height:1.2rem;
+        font-size:.6rem;
+    }
+    &.show{
+        transform: translateY(2.2rem);
+    }
+}

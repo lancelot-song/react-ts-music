@@ -2,12 +2,13 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:05 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-23 17:49:45
+ * @Last Modified time: 2019-08-29 16:17:16
  */
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import HomeSwipe from '../../components/slider';
+import Notice from '../../components/notice';
 import routerPath from '../../api/routerPath';
 import { IProps } from './type';
 import { TSliderGo } from '../../components/slider';
@@ -29,6 +30,7 @@ const Home:React.FC<IProps> = (props) => {
 
     //每次url改变后重新渲染数据
     const renderSliderComponents = useMemo(()=>{
+        console.log("???")
         sliderComponents[initSliderIndex]['loaded'] = true;
         return sliderComponents.map((Item:any,index:number)=>(
             <div className='swiper-slide' key={index}>
@@ -43,11 +45,11 @@ const Home:React.FC<IProps> = (props) => {
         history.replace( `${routerPath.home.default}/${switchRouterTypes[swipeIndex]}` );
     }
     useEffect(()=>{
-        
         SliderRef.current && SliderRef.current.go( switchRouterTypes.indexOf(match.params.navType) );
     });
     return (
         <div className='ui-app'>
+            <Notice />
             <div className='ui-hd'>
                 <Link to='/menu' className='btn-menu-switch'></Link>
                 <div className='ui-nav'>
@@ -74,4 +76,5 @@ const mapState = (state:any) => ({
     sliderConfig : state.getIn(['home','sliderConfig']).toJS(),
     sliderComponents : state.getIn(['home','sliderComponents']).toJS()
 });
+
 export default withRouter(connect(mapState)(React.memo(Home)));

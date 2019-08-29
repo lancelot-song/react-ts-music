@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-20 13:41:26 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-20 13:57:30
+ * @Last Modified time: 2019-08-29 10:30:34
  */
 export interface ICssPrefix {
     [ propName:string] : string;

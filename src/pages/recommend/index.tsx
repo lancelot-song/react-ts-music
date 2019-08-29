@@ -2,7 +2,7 @@
  * @Author: songzhiheng 
  * @Date: 2019-08-19 13:33:16 
  * @Last Modified by: songzhiheng
- * @Last Modified time: 2019-08-28 17:35:03
+ * @Last Modified time: 2019-08-29 16:20:57
  */
 import React, { useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 import { forceCheck } from 'react-lazyload';
 import BannerSlider from '../../components/slider';
 import { IRecommendProps } from './type'
-import * as recommendAction from './store/actionCreators';
+import { actionCreators as recommendAction } from './store';
+import { actionCreators as noticeAction } from '../../components/notice/store';
 import Scroll from '../../components/scroll';
 import ColumnVertical from '../../components/columns/vertical';
 import { TSliderUpdate } from '../../components/slider';
@@ -22,9 +23,15 @@ const Recommend:React.FunctionComponent<IRecommendProps> = (props) =>{
     const BannerSwipeRef = useRef<TSliderUpdate>(null);
 
     useEffect(()=>{
-        requestBannerList();
-        requestMusicSquare();
-        requestMusicSheet()
+        if( !bannerList.length ){
+            requestBannerList();
+        }
+        if( !musicSquare.items.length ){
+            requestMusicSquare();
+        }
+        if( !musicSheet.items.length ){
+            requestMusicSheet()
+        }
     },[]);
 
     useEffect(()=>{
@@ -117,6 +124,7 @@ const mapProps = (dispatch:any) => ({
             setTimeout(function(){
                 dispatch( recommendAction.requestBannerList() );
                 resolve()
+                dispatch( noticeAction.showNotice('已为你推荐新的个性化内容', 2000) );
             },3000);
         });
         refreshCallback();

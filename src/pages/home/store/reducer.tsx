@@ -2,7 +2,6 @@ import React from 'react';
 import { fromJS } from 'immutable';
 import Loadable from 'react-loadable';
 import Loading from '../../../components/loading';
-import { TAction } from '../type';
 //import * as constants from './constants';
 
 const LoadableMe = Loadable({
@@ -50,6 +49,10 @@ const defaultState = fromJS({
         initialSlide : 1
     }
 });
+type TAction = {
+    type : string;
+    data : object[] | boolean;
+}
 export default (state = defaultState, action:TAction) => {
     return state;
 }
