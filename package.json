@@ -152,7 +152,7 @@
     "@types/react-loadable": "^5.5.1",
     "@types/swiper": "^4.4.4",
     "immutable": "^4.0.0-rc.12",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "react-redux": "^7.1.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
